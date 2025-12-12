@@ -1,0 +1,35 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Build
+dist/
+build/
+
+# Prisma
+prisma/migrations/
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+/src/generated/prisma
+
+/generated/prisma
