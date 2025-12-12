@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ------------------------------------ enums ------------------------------------
+enum UserRole {
+  PATIENT
+  DOCTOR
+  ADMIN
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  RESCHEDULED
+  CANCELLED
+  COMPLETED
+}
+
+enum ActionType {
+  PATIENT_CANCELLED
+  PATIENT_RESCHEDULED
+  DOCTOR_RESCHEDULED
+}
+
+// ------------------------------------ models ------------------------------------
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  phone     String? // optional
+  role      UserRole @default(PATIENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt // auto update timestamp when record is updated
+
+  // relationships
+  doctor        Doctor? // 1 to 1 optional relationship
+  appointments  Appointment[] // as patient - a user can have many appointments - 1 to many relationship
+  actionHistory AppointmentHistory[] // action performed by the user - 1 to many relationship
+}
+
+model Doctor {
+  id             Int      @id @default(autoincrement())
+  specialization String?
+  experience     Int?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt // auto update timestamp when record is updated
+
+  // relationships
+  userId Int  @unique
+  user   User @relation(fields: [userId], references: [id]) // 1 to 1 - mandatory - doctor must have a user account
+
+  hospitals    DoctorHospital[] // a doctor can have multiple hospitals - 1 to many relationship - join table
+  appointments Appointment[] // a doctor can have many appointments across all hospitals - 1 to many relationship
+}
+
+model Hospital {
+  id        Int      @id @default(autoincrement())
+  name      String
+  location  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt // auto update timestamp when record is updated
+
+  // relationships
+  doctors      DoctorHospital[] // a hospital can have many doctors - 1 to many relationship
+  appointments Appointment[] // a hospital can have many appointments - 1 to many relationship
+}
+
+model DoctorHospital {
+  id         Int      @id @default(autoincrement())
+  doctorId   Int
+  hospitalId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt // auto update timestamp when record is updated
+
+  // relationships
+  // Doctor <--> Hospital is many-to-many relationship - joined table
+  doctor       Doctor        @relation(fields: [doctorId], references: [id]) // One doctor works at many hospitals
+  hospital     Hospital      @relation(fields: [hospitalId], references: [id]) // One hospital has many doctors
+  appointments Appointment[] // a doctor in a specific hospital location can have many appointments there - 1 to many
+}
+
+model Appointment {
+  id        Int               @id @default(autoincrement())
+  date      DateTime
+  status    AppointmentStatus @default(SCHEDULED)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt // auto update timestamp when record is updated
+
+  // relationships
+  patientId Int
+  patient   User @relation(fields: [patientId], references: [id])
+
+  doctorId Int
+  doctor   Doctor @relation(fields: [doctorId], references: [id])
+
+  hospitalId Int
+  hospital   Hospital @relation(fields: [hospitalId], references: [id])
+
+  doctorHospitalId Int
+  doctorHospital   DoctorHospital @relation(fields: [doctorHospitalId], references: [id])
+
+  history AppointmentHistory[] // 1 to many - each appointment can have many history records
+
+  // ✔ Appointment → Patient (many-to-one)
+
+  // Each appointment belongs to 1 patient.
+
+  // ✔ Appointment → Doctor (many-to-one)
+
+  // Belongs to 1 doctor.
+
+  // ✔ Appointment → Hospital (many-to-one)
+
+  // Belongs to 1 hospital.
+
+  // ✔ Appointment → DoctorHospital (many-to-one)
+}
+
+model AppointmentHistory {
+  id            Int         @id @default(autoincrement())
+  appointmentId Int
+  appointment   Appointment @relation(fields: [appointmentId], references: [id])
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt // auto update timestamp when record is updated
+
+  // relationships
+  actionById Int
+  actionBy   User @relation(fields: [actionById], references: [id])
+
+  action ActionType // enum - patient_cancelled, patient_rescheduled, doctor_rescheduled
+
+  oldDate DateTime?
+  newDate DateTime?
+
+  // ✔ AppointmentHistory → Appointment (many-to-one)
+
+  // Multiple changes in the same appointment.
+
+  // ✔ AppointmentHistory → User (many-to-one)
+
+  // Records WHO made the change (doctor or patient).
+}
