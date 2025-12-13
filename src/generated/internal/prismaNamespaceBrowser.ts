@@ -55,6 +55,7 @@ export const ModelName = {
   Doctor: 'Doctor',
   Hospital: 'Hospital',
   DoctorHospital: 'DoctorHospital',
+  DoctorAvailability: 'DoctorAvailability',
   Appointment: 'Appointment',
   AppointmentHistory: 'AppointmentHistory'
 } as const
@@ -124,6 +125,20 @@ export const DoctorHospitalScalarFieldEnum = {
 export type DoctorHospitalScalarFieldEnum = (typeof DoctorHospitalScalarFieldEnum)[keyof typeof DoctorHospitalScalarFieldEnum]
 
 
+export const DoctorAvailabilityScalarFieldEnum = {
+  id: 'id',
+  doctorId: 'doctorId',
+  hospitalId: 'hospitalId',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DoctorAvailabilityScalarFieldEnum = (typeof DoctorAvailabilityScalarFieldEnum)[keyof typeof DoctorAvailabilityScalarFieldEnum]
+
+
 export const AppointmentScalarFieldEnum = {
   id: 'id',
   date: 'date',
@@ -133,7 +148,8 @@ export const AppointmentScalarFieldEnum = {
   patientId: 'patientId',
   doctorId: 'doctorId',
   hospitalId: 'hospitalId',
-  doctorHospitalId: 'doctorHospitalId'
+  doctorHospitalId: 'doctorHospitalId',
+  availabilityId: 'availabilityId'
 } as const
 
 export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]

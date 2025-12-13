@@ -388,6 +388,7 @@ export const ModelName = {
   Doctor: 'Doctor',
   Hospital: 'Hospital',
   DoctorHospital: 'DoctorHospital',
+  DoctorAvailability: 'DoctorAvailability',
   Appointment: 'Appointment',
   AppointmentHistory: 'AppointmentHistory'
 } as const
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "doctor" | "hospital" | "doctorHospital" | "appointment" | "appointmentHistory"
+    modelProps: "user" | "doctor" | "hospital" | "doctorHospital" | "doctorAvailability" | "appointment" | "appointmentHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -705,6 +706,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DoctorAvailability: {
+      payload: Prisma.$DoctorAvailabilityPayload<ExtArgs>
+      fields: Prisma.DoctorAvailabilityFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DoctorAvailabilityFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorAvailabilityPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DoctorAvailabilityFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorAvailabilityPayload>
+        }
+        findFirst: {
+          args: Prisma.DoctorAvailabilityFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorAvailabilityPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DoctorAvailabilityFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorAvailabilityPayload>
+        }
+        findMany: {
+          args: Prisma.DoctorAvailabilityFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorAvailabilityPayload>[]
+        }
+        create: {
+          args: Prisma.DoctorAvailabilityCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorAvailabilityPayload>
+        }
+        createMany: {
+          args: Prisma.DoctorAvailabilityCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DoctorAvailabilityCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorAvailabilityPayload>[]
+        }
+        delete: {
+          args: Prisma.DoctorAvailabilityDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorAvailabilityPayload>
+        }
+        update: {
+          args: Prisma.DoctorAvailabilityUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorAvailabilityPayload>
+        }
+        deleteMany: {
+          args: Prisma.DoctorAvailabilityDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DoctorAvailabilityUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DoctorAvailabilityUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorAvailabilityPayload>[]
+        }
+        upsert: {
+          args: Prisma.DoctorAvailabilityUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DoctorAvailabilityPayload>
+        }
+        aggregate: {
+          args: Prisma.DoctorAvailabilityAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDoctorAvailability>
+        }
+        groupBy: {
+          args: Prisma.DoctorAvailabilityGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DoctorAvailabilityGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DoctorAvailabilityCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DoctorAvailabilityCountAggregateOutputType> | number
+        }
+      }
+    }
     Appointment: {
       payload: Prisma.$AppointmentPayload<ExtArgs>
       fields: Prisma.AppointmentFieldRefs
@@ -941,6 +1016,20 @@ export const DoctorHospitalScalarFieldEnum = {
 export type DoctorHospitalScalarFieldEnum = (typeof DoctorHospitalScalarFieldEnum)[keyof typeof DoctorHospitalScalarFieldEnum]
 
 
+export const DoctorAvailabilityScalarFieldEnum = {
+  id: 'id',
+  doctorId: 'doctorId',
+  hospitalId: 'hospitalId',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DoctorAvailabilityScalarFieldEnum = (typeof DoctorAvailabilityScalarFieldEnum)[keyof typeof DoctorAvailabilityScalarFieldEnum]
+
+
 export const AppointmentScalarFieldEnum = {
   id: 'id',
   date: 'date',
@@ -950,7 +1039,8 @@ export const AppointmentScalarFieldEnum = {
   patientId: 'patientId',
   doctorId: 'doctorId',
   hospitalId: 'hospitalId',
-  doctorHospitalId: 'doctorHospitalId'
+  doctorHospitalId: 'doctorHospitalId',
+  availabilityId: 'availabilityId'
 } as const
 
 export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
@@ -1053,6 +1143,13 @@ export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime[]'
  */
 export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -1180,6 +1277,7 @@ export type GlobalOmitConfig = {
   doctor?: Prisma.DoctorOmit
   hospital?: Prisma.HospitalOmit
   doctorHospital?: Prisma.DoctorHospitalOmit
+  doctorAvailability?: Prisma.DoctorAvailabilityOmit
   appointment?: Prisma.AppointmentOmit
   appointmentHistory?: Prisma.AppointmentHistoryOmit
 }

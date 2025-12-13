@@ -56,8 +56,9 @@ model Doctor {
   userId Int  @unique
   user   User @relation(fields: [userId], references: [id]) // 1 to 1 - mandatory - doctor must have a user account
 
-  hospitals    DoctorHospital[] // a doctor can have multiple hospitals - 1 to many relationship - join table
-  appointments Appointment[] // a doctor can have many appointments across all hospitals - 1 to many relationship
+  hospitals      DoctorHospital[] // a doctor can have multiple hospitals - 1 to many relationship - join table
+  appointments   Appointment[] // a doctor can have many appointments across all hospitals - 1 to many relationship
+  availabilities DoctorAvailability[] // a doctor can have many availabilities - 1 to many
 }
 
 model Hospital {
@@ -68,8 +69,9 @@ model Hospital {
   updatedAt DateTime @updatedAt // auto update timestamp when record is updated
 
   // relationships
-  doctors      DoctorHospital[] // a hospital can have many doctors - 1 to many relationship
-  appointments Appointment[] // a hospital can have many appointments - 1 to many relationship
+  doctors              DoctorHospital[] // a hospital can have many doctors - 1 to many relationship
+  appointments         Appointment[] // a hospital can have many appointments - 1 to many relationship
+  doctorAvailabilities DoctorAvailability[] // a hospital can have many availabilities - 1 to many
 }
 
 model DoctorHospital {
@@ -84,6 +86,26 @@ model DoctorHospital {
   doctor       Doctor        @relation(fields: [doctorId], references: [id]) // One doctor works at many hospitals
   hospital     Hospital      @relation(fields: [hospitalId], references: [id]) // One hospital has many doctors
   appointments Appointment[] // a doctor in a specific hospital location can have many appointments there - 1 to many
+
+  @@unique([doctorId, hospitalId])
+}
+
+model DoctorAvailability {
+  id         Int      @id @default(autoincrement())
+  doctorId   Int
+  hospitalId Int?
+  startTime  DateTime
+  endTime    DateTime
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // relations
+  doctor       Doctor        @relation(fields: [doctorId], references: [id])
+  hospital     Hospital?     @relation(fields: [hospitalId], references: [id])
+  appointments Appointment[]
+
+  @@unique([doctorId, startTime, endTime])
 }
 
 model Appointment {
@@ -97,14 +119,17 @@ model Appointment {
   patientId Int
   patient   User @relation(fields: [patientId], references: [id])
 
-  doctorId Int
-  doctor   Doctor @relation(fields: [doctorId], references: [id])
+  doctor   Doctor? @relation(fields: [doctorId], references: [id])
+  doctorId Int?
 
-  hospitalId Int
-  hospital   Hospital @relation(fields: [hospitalId], references: [id])
+  hospital   Hospital? @relation(fields: [hospitalId], references: [id])
+  hospitalId Int?
 
   doctorHospitalId Int
   doctorHospital   DoctorHospital @relation(fields: [doctorHospitalId], references: [id])
+
+  availabilityId Int?
+  availability   DoctorAvailability? @relation(fields: [availabilityId], references: [id])
 
   history AppointmentHistory[] // 1 to many - each appointment can have many history records
 
@@ -121,6 +146,10 @@ model Appointment {
   // Belongs to 1 hospital.
 
   // ✔ Appointment → DoctorHospital (many-to-one)
+
+  // ✔ Appointment → DoctorAvailability (many-to-one)
+
+  // Belongs to 1 availability.
 }
 
 model AppointmentHistory {

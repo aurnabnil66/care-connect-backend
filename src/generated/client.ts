@@ -58,6 +58,11 @@ export type Hospital = Prisma.HospitalModel
  */
 export type DoctorHospital = Prisma.DoctorHospitalModel
 /**
+ * Model DoctorAvailability
+ * 
+ */
+export type DoctorAvailability = Prisma.DoctorAvailabilityModel
+/**
  * Model Appointment
  * 
  */

@@ -242,6 +242,7 @@ export type DoctorHospitalOrderByWithRelationInput = {
 
 export type DoctorHospitalWhereUniqueInput = Prisma.AtLeast<{
   id?: number
+  doctorId_hospitalId?: Prisma.DoctorHospitalDoctorIdHospitalIdCompoundUniqueInput
   AND?: Prisma.DoctorHospitalWhereInput | Prisma.DoctorHospitalWhereInput[]
   OR?: Prisma.DoctorHospitalWhereInput[]
   NOT?: Prisma.DoctorHospitalWhereInput | Prisma.DoctorHospitalWhereInput[]
@@ -252,7 +253,7 @@ export type DoctorHospitalWhereUniqueInput = Prisma.AtLeast<{
   doctor?: Prisma.XOR<Prisma.DoctorScalarRelationFilter, Prisma.DoctorWhereInput>
   hospital?: Prisma.XOR<Prisma.HospitalScalarRelationFilter, Prisma.HospitalWhereInput>
   appointments?: Prisma.AppointmentListRelationFilter
-}, "id">
+}, "id" | "doctorId_hospitalId">
 
 export type DoctorHospitalOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -341,6 +342,11 @@ export type DoctorHospitalListRelationFilter = {
 
 export type DoctorHospitalOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type DoctorHospitalDoctorIdHospitalIdCompoundUniqueInput = {
+  doctorId: number
+  hospitalId: number
 }
 
 export type DoctorHospitalCountOrderByAggregateInput = {
