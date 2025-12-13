@@ -33,6 +33,7 @@ model User {
   name      String
   email     String   @unique
   password  String
+  googleId  String?  @unique
   phone     String? // optional
   role      UserRole @default(PATIENT)
   createdAt DateTime @default(now())
