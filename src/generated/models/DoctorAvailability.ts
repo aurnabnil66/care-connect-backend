@@ -541,10 +541,6 @@ export type DoctorAvailabilityUncheckedUpdateManyWithoutHospitalNestedInput = {
   deleteMany?: Prisma.DoctorAvailabilityScalarWhereInput | Prisma.DoctorAvailabilityScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type DoctorAvailabilityCreateNestedOneWithoutAppointmentsInput = {
   create?: Prisma.XOR<Prisma.DoctorAvailabilityCreateWithoutAppointmentsInput, Prisma.DoctorAvailabilityUncheckedCreateWithoutAppointmentsInput>
   connectOrCreate?: Prisma.DoctorAvailabilityCreateOrConnectWithoutAppointmentsInput

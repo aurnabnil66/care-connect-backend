@@ -526,10 +526,6 @@ export type EnumActionTypeFieldUpdateOperationsInput = {
   set?: $Enums.ActionType
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type AppointmentHistoryCreateWithoutActionByInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
