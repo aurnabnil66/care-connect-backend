@@ -3,10 +3,22 @@ import { hashPassword, comparePassword } from "@/utils/password";
 import { generateToken } from "@/utils/jwt";
 import { sendMail } from "@/utils/mailer";
 
+// ------------------------------ Generate OTP ------------------------------
 export const generateOTP = () =>
   Math.floor(100000 + Math.random() * 900000).toString();
 
 const OTP_EXPIRY_MINUTES = 3;
+
+// ----------------------- function to issue JWT token and return the token with user object -----------------------
+export const issueToken = (user: any) => {
+  const token = generateToken({
+    id: user.id,
+    email: user.email,
+    role: user.role,
+  });
+
+  return { user, token };
+};
 
 // ------------------------------ Email Signup ------------------------------
 export const signUpWithEmail = async ({
@@ -25,13 +37,13 @@ export const signUpWithEmail = async ({
     throw new Error("Account already exists. Please login.");
   }
 
-  const hashed = password && (await hashPassword(password));
+  const hashedPassword = password && (await hashPassword(password));
 
   const newUser = await prisma.user.create({
     data: {
       name,
       email,
-      password: hashed,
+      password: hashedPassword,
       emailVerified: false,
     },
   });
@@ -52,30 +64,38 @@ export const loginWithEmail = async ({
   email: string;
   password: string;
 }) => {
+  // Check if user exists
   const user = await prisma.user.findUnique({ where: { email } });
 
+  // Check if user doesn't exist or password is incorrect
   if (!user || !user.password) {
     throw new Error("Invalid email or password");
   }
 
+  // Check if user has google account and no password
   if (user.googleId && !user.password) {
     throw new Error("Please login with Google");
   }
 
+  // match the input password with hashed password
   const isMatch = await comparePassword(password, user.password);
 
+  // if password doesn't match
   if (!isMatch) {
     throw new Error("Invalid email or password");
   }
 
+  // if email is not verified
   if (!user.emailVerified) {
     throw new Error("Please verify your email");
   }
 
   // -------------- 2FA Step --------------
   if (user.twoFAEnabled) {
+    // if 2FA is enabled - generate OTP
     const otp = generateOTP();
 
+    // update user with OTP
     await prisma.user.update({
       where: { id: user.id },
       data: {
@@ -84,6 +104,7 @@ export const loginWithEmail = async ({
       },
     });
 
+    // send 2FA email
     await send2FAEmail(user.email, otp);
 
     return {
@@ -93,24 +114,101 @@ export const loginWithEmail = async ({
     };
   }
 
-  const token = generateToken({
-    id: user.id,
-    role: user.role,
-    email: user.email,
-  });
-
-  return { token };
+  // if 2FA is not enabled - issue JWT token and return
+  return issueToken(user);
 };
 
-// ----------------------- function to issue JWT token and return the token with user object -----------------------
-export const issueToken = (user: any) => {
-  const token = generateToken({
-    id: user.id,
-    email: user.email,
-    role: user.role,
+// ------------------------------ Verify 2FA ------------------------------
+export const verify2FA = async (userId: number, otp: string) => {
+  const user = await prisma.user?.findUnique({ where: { id: userId } });
+
+  // if user doesn't exist or 2FA is not enabled
+  if (!user || !user.twoFACode || !user.twoFAExpires) {
+    throw new Error("2FA is not enabled for this user");
+  }
+
+  // if 2FA expires before current date
+  if (user.twoFAExpires < new Date()) {
+    throw new Error("OTP expired");
+  }
+
+  // if OTP doesn't match
+  if (user.twoFACode !== otp) {
+    throw new Error("Invalid OTP");
+  }
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: {
+      twoFACode: null,
+      twoFAExpires: null,
+    },
   });
 
-  return token;
+  // issue JWT token and return
+  return issueToken(user);
+};
+
+// ------------------------------ Login with Google ------------------------------
+export const loginWithGoogle = async ({
+  email,
+  googleId,
+  name,
+}: {
+  email: string;
+  googleId: string;
+  name: string;
+}) => {
+  // check if user with google id already exists
+  let user = await prisma.user.findUnique({ where: { googleId } });
+
+  // if user exists, issue JWT token
+  if (user) {
+    issueToken(user);
+  }
+
+  // link with existing account with same email
+  const byEmail = await prisma.user.findUnique({ where: { email } });
+
+  if (byEmail) {
+    user = await prisma.user.update({
+      where: { id: byEmail.id },
+      data: {
+        googleId,
+        emailVerified: true, // Google emails are verified
+        name: byEmail.name || name,
+      },
+    });
+
+    return issueToken(user);
+  }
+
+  // create new user
+  user = await prisma.user.create({
+    data: {
+      name: name ?? "Google User",
+      email,
+      googleId,
+      emailVerified: true, // Google emails are verified
+    },
+  });
+
+  return issueToken(user);
+};
+
+// ------------------------------ Enable/Disable 2FA ------------------------------
+export const enable2FA = async (userId: number) => {
+  await prisma.user.update({
+    where: { id: userId },
+    data: { twoFAEnabled: true },
+  });
+};
+
+export const disable2FA = async (userId: number) => {
+  await prisma.user.update({
+    where: { id: userId },
+    data: { twoFAEnabled: false },
+  });
 };
 
 // ------------------------------ Send Verification Email ------------------------------
