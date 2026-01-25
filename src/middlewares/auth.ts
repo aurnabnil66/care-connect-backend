@@ -1,12 +1,12 @@
 import { Response, NextFunction } from "express";
-import { verifyToken } from "@/utils/jwt";
-import { AuthRequest } from "@/interfaces/AuthRequest";
-import { JwtUserPayload } from "@/interfaces/JwtUserPayload";
+import { verifyToken } from "../utils/jwt";
+import { AuthRequest } from "../interfaces/AuthRequest";
+import { JwtUserPayload } from "../interfaces/JwtUserPayload";
 
 export const authMiddleware = (
   req: AuthRequest,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const header = req.headers.authorization; // acquiring the token/authorization header

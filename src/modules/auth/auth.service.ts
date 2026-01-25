@@ -1,7 +1,7 @@
-import { prisma } from "@/lib/client";
-import { hashPassword, comparePassword } from "@/utils/password";
-import { generateToken } from "@/utils/jwt";
-import { sendMail } from "@/utils/mailer";
+import { prisma } from "../../lib/client";
+import { hashPassword, comparePassword } from "../../utils/password";
+import { generateToken } from "../../utils/jwt";
+import { sendMail } from "../../utils/mailer";
 
 // ------------------------------ Generate OTP ------------------------------
 export const generateOTP = () =>
