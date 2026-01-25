@@ -5,12 +5,17 @@ import { rolesMiddleware } from "@/middlewares/roles";
 
 const router = Router();
 
-// admin or self
-router.get("/", authMiddleware, userController.getAllUsers);
-router.get("/:id", authMiddleware, userController.getUserById);
-router.patch("/:id", authMiddleware, userController.updateUser);
+// -------------------- ADMIN ONLY --------------------
 
-// admin only
+// Get all users
+router.get(
+  "/",
+  authMiddleware,
+  rolesMiddleware(["ADMIN"]),
+  userController.getAllUsers,
+);
+
+// Create user (admin only)
 router.post(
   "/",
   authMiddleware,
@@ -18,25 +23,30 @@ router.post(
   userController.createUser,
 );
 
-router.put(
-  "/:id",
-  authMiddleware,
-  rolesMiddleware(["ADMIN"]),
-  userController.updateUser,
-);
-
-router.patch(
-  "/:id",
-  authMiddleware,
-  rolesMiddleware(["ADMIN"]),
-  userController.updateUser,
-);
-
+// Delete user
 router.delete(
   "/:id",
   authMiddleware,
   rolesMiddleware(["ADMIN"]),
   userController.deleteUser,
+);
+
+// -------------------- ADMIN OR SELF --------------------
+
+// Get user by ID
+router.get(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(["ADMIN"], { allowOwner: true }),
+  userController.getUserById,
+);
+
+// Update user (profile or admin edit)
+router.patch(
+  "/:id",
+  authMiddleware,
+  rolesMiddleware(["ADMIN"], { allowOwner: true }),
+  userController.updateUser,
 );
 
 export default router;
