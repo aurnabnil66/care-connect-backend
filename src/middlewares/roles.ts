@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import { AuthRequest } from "../interfaces/AuthRequest";
+import { AuthRequest } from "@/interfaces/AuthRequest";
 
 type RolesOptions = {
   allowOwner?: boolean; // allow user to access their own resource

@@ -6,7 +6,7 @@
   "license": "MIT",
   "author": "",
   "scripts": {
-    "dev": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
+    "dev": "nodemon --watch src --ext ts --exec ts-node -r tsconfig-paths/register src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js"
   },
@@ -36,6 +36,7 @@
     "nodemon": "^3.1.11",
     "prisma": "^7.0.1",
     "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3"
   }
 }

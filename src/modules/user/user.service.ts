@@ -1,4 +1,4 @@
-import { prisma } from "../../lib/client";
+import { prisma } from "@/lib/client";
 
 // ------------------------------ Create User ------------------------------
 export const createUser = async (data: {

@@ -1,7 +1,7 @@
 import { Response, NextFunction } from "express";
-import { verifyToken } from "../utils/jwt";
-import { AuthRequest } from "../interfaces/AuthRequest";
-import { JwtUserPayload } from "../interfaces/JwtUserPayload";
+import { verifyToken } from "@/utils/jwt";
+import { AuthRequest } from "@/interfaces/AuthRequest";
+import { JwtUserPayload } from "@/interfaces/JwtUserPayload";
 
 export const authMiddleware = (
   req: AuthRequest,

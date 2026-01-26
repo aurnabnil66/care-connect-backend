@@ -1,8 +1,8 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import userRoutes from "./routes/user.route";
-import authRoutes from "./routes/auth.route";
+import userRoutes from "@/routes/user.route";
+import authRoutes from "@/routes/auth.route";
 
 dotenv.config();
 
