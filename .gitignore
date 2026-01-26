@@ -30,6 +30,8 @@ Thumbs.db
 .vscode/
 .idea/
 
+.github
+
 /src/generated/prisma
 
 /generated/prisma
