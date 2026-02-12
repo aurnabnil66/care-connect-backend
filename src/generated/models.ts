@@ -9,10 +9,14 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
-export type * from './models/Doctor'
+export type * from './models/AdminProfile'
+export type * from './models/DoctorProfile'
+export type * from './models/PatientProfile'
+export type * from './models/HospitalManagerProfile'
 export type * from './models/Hospital'
 export type * from './models/DoctorHospital'
-export type * from './models/DoctorAvailability'
+export type * from './models/Availability'
 export type * from './models/Appointment'
-export type * from './models/AppointmentHistory'
+export type * from './models/Prescription'
+export type * from './models/OtpVerification'
 export type * from './commonInputTypes'

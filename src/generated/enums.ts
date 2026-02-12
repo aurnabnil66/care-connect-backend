@@ -9,29 +9,29 @@
 * 🟢 You can import this file directly.
 */
 
-export const UserRole = {
-  PATIENT: 'PATIENT',
+export const Role = {
+  ADMIN: 'ADMIN',
   DOCTOR: 'DOCTOR',
-  ADMIN: 'ADMIN'
+  PATIENT: 'PATIENT',
+  HOSPITAL_MANAGER: 'HOSPITAL_MANAGER'
 } as const
 
-export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+export type Role = (typeof Role)[keyof typeof Role]
 
 
 export const AppointmentStatus = {
-  SCHEDULED: 'SCHEDULED',
-  RESCHEDULED: 'RESCHEDULED',
-  CANCELLED: 'CANCELLED',
-  COMPLETED: 'COMPLETED'
+  PENDING: 'PENDING',
+  CONFIRMED: 'CONFIRMED',
+  DONE: 'DONE',
+  CANCELLED: 'CANCELLED'
 } as const
 
 export type AppointmentStatus = (typeof AppointmentStatus)[keyof typeof AppointmentStatus]
 
 
-export const ActionType = {
-  PATIENT_CANCELLED: 'PATIENT_CANCELLED',
-  PATIENT_RESCHEDULED: 'PATIENT_RESCHEDULED',
-  DOCTOR_RESCHEDULED: 'DOCTOR_RESCHEDULED'
+export const OtpType = {
+  EMAIL_VERIFICATION: 'EMAIL_VERIFICATION',
+  PASSWORD_RESET: 'PASSWORD_RESET'
 } as const
 
-export type ActionType = (typeof ActionType)[keyof typeof ActionType]
+export type OtpType = (typeof OtpType)[keyof typeof OtpType]

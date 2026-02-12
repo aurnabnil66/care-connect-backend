@@ -31,7 +31,7 @@ export * from "./enums"
  * const users = await prisma.user.findMany()
  * ```
  * 
- * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
+ * Read more in our [docs](https://pris.ly/d/client).
  */
 export const PrismaClient = $Class.getPrismaClientClass()
 export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts extends Prisma.PrismaClientOptions["omit"] = Prisma.PrismaClientOptions["omit"], ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = $Class.PrismaClient<LogOpts, OmitOpts, ExtArgs>
@@ -43,10 +43,25 @@ export { Prisma }
  */
 export type User = Prisma.UserModel
 /**
- * Model Doctor
+ * Model AdminProfile
  * 
  */
-export type Doctor = Prisma.DoctorModel
+export type AdminProfile = Prisma.AdminProfileModel
+/**
+ * Model DoctorProfile
+ * 
+ */
+export type DoctorProfile = Prisma.DoctorProfileModel
+/**
+ * Model PatientProfile
+ * 
+ */
+export type PatientProfile = Prisma.PatientProfileModel
+/**
+ * Model HospitalManagerProfile
+ * 
+ */
+export type HospitalManagerProfile = Prisma.HospitalManagerProfileModel
 /**
  * Model Hospital
  * 
@@ -58,17 +73,22 @@ export type Hospital = Prisma.HospitalModel
  */
 export type DoctorHospital = Prisma.DoctorHospitalModel
 /**
- * Model DoctorAvailability
+ * Model Availability
  * 
  */
-export type DoctorAvailability = Prisma.DoctorAvailabilityModel
+export type Availability = Prisma.AvailabilityModel
 /**
  * Model Appointment
  * 
  */
 export type Appointment = Prisma.AppointmentModel
 /**
- * Model AppointmentHistory
+ * Model Prescription
  * 
  */
-export type AppointmentHistory = Prisma.AppointmentHistoryModel
+export type Prescription = Prisma.PrescriptionModel
+/**
+ * Model OtpVerification
+ * 
+ */
+export type OtpVerification = Prisma.OtpVerificationModel

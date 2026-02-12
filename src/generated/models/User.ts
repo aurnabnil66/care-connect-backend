@@ -20,122 +20,74 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
-  _avg: UserAvgAggregateOutputType | null
-  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
 
-export type UserAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type UserSumAggregateOutputType = {
-  id: number | null
-}
-
 export type UserMinAggregateOutputType = {
-  id: number | null
-  name: string | null
+  id: string | null
   email: string | null
   password: string | null
   googleId: string | null
-  emailVerified: boolean | null
-  twoFAEnabled: boolean | null
-  twoFACode: string | null
-  twoFAExpires: Date | null
-  phone: string | null
-  role: $Enums.UserRole | null
+  role: $Enums.Role | null
+  isVerified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
-  id: number | null
-  name: string | null
+  id: string | null
   email: string | null
   password: string | null
   googleId: string | null
-  emailVerified: boolean | null
-  twoFAEnabled: boolean | null
-  twoFACode: string | null
-  twoFAExpires: Date | null
-  phone: string | null
-  role: $Enums.UserRole | null
+  role: $Enums.Role | null
+  isVerified: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
-  name: number
   email: number
   password: number
   googleId: number
-  emailVerified: number
-  twoFAEnabled: number
-  twoFACode: number
-  twoFAExpires: number
-  phone: number
   role: number
+  isVerified: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
 
-export type UserAvgAggregateInputType = {
-  id?: true
-}
-
-export type UserSumAggregateInputType = {
-  id?: true
-}
-
 export type UserMinAggregateInputType = {
   id?: true
-  name?: true
   email?: true
   password?: true
   googleId?: true
-  emailVerified?: true
-  twoFAEnabled?: true
-  twoFACode?: true
-  twoFAExpires?: true
-  phone?: true
   role?: true
+  isVerified?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
-  name?: true
   email?: true
   password?: true
   googleId?: true
-  emailVerified?: true
-  twoFAEnabled?: true
-  twoFACode?: true
-  twoFAExpires?: true
-  phone?: true
   role?: true
+  isVerified?: true
   createdAt?: true
   updatedAt?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
-  name?: true
   email?: true
   password?: true
   googleId?: true
-  emailVerified?: true
-  twoFAEnabled?: true
-  twoFACode?: true
-  twoFAExpires?: true
-  phone?: true
   role?: true
+  isVerified?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -179,18 +131,6 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: UserAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: UserSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -221,29 +161,20 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
-  _avg?: UserAvgAggregateInputType
-  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
 
 export type UserGroupByOutputType = {
-  id: number
-  name: string
-  email: string
+  id: string
+  email: string | null
   password: string | null
   googleId: string | null
-  emailVerified: boolean
-  twoFAEnabled: boolean
-  twoFACode: string | null
-  twoFAExpires: Date | null
-  phone: string | null
-  role: $Enums.UserRole
+  role: $Enums.Role
+  isVerified: boolean
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
-  _avg: UserAvgAggregateOutputType | null
-  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -267,280 +198,212 @@ export type UserWhereInput = {
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  id?: Prisma.IntFilter<"User"> | number
-  name?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
+  id?: Prisma.StringFilter<"User"> | string
+  email?: Prisma.StringNullableFilter<"User"> | string | null
   password?: Prisma.StringNullableFilter<"User"> | string | null
   googleId?: Prisma.StringNullableFilter<"User"> | string | null
-  emailVerified?: Prisma.BoolFilter<"User"> | boolean
-  twoFAEnabled?: Prisma.BoolFilter<"User"> | boolean
-  twoFACode?: Prisma.StringNullableFilter<"User"> | string | null
-  twoFAExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  phone?: Prisma.StringNullableFilter<"User"> | string | null
-  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  doctor?: Prisma.XOR<Prisma.DoctorNullableScalarRelationFilter, Prisma.DoctorWhereInput> | null
-  appointments?: Prisma.AppointmentListRelationFilter
-  actionHistory?: Prisma.AppointmentHistoryListRelationFilter
+  adminProfile?: Prisma.XOR<Prisma.AdminProfileNullableScalarRelationFilter, Prisma.AdminProfileWhereInput> | null
+  doctorProfile?: Prisma.XOR<Prisma.DoctorProfileNullableScalarRelationFilter, Prisma.DoctorProfileWhereInput> | null
+  patientProfile?: Prisma.XOR<Prisma.PatientProfileNullableScalarRelationFilter, Prisma.PatientProfileWhereInput> | null
+  hospitalManagerProfile?: Prisma.XOR<Prisma.HospitalManagerProfileNullableScalarRelationFilter, Prisma.HospitalManagerProfileWhereInput> | null
+  verifyOtp?: Prisma.OtpVerificationListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   googleId?: Prisma.SortOrderInput | Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
-  twoFAEnabled?: Prisma.SortOrder
-  twoFACode?: Prisma.SortOrderInput | Prisma.SortOrder
-  twoFAExpires?: Prisma.SortOrderInput | Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  doctor?: Prisma.DoctorOrderByWithRelationInput
-  appointments?: Prisma.AppointmentOrderByRelationAggregateInput
-  actionHistory?: Prisma.AppointmentHistoryOrderByRelationAggregateInput
+  adminProfile?: Prisma.AdminProfileOrderByWithRelationInput
+  doctorProfile?: Prisma.DoctorProfileOrderByWithRelationInput
+  patientProfile?: Prisma.PatientProfileOrderByWithRelationInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileOrderByWithRelationInput
+  verifyOtp?: Prisma.OtpVerificationOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   email?: string
   googleId?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  name?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringNullableFilter<"User"> | string | null
-  emailVerified?: Prisma.BoolFilter<"User"> | boolean
-  twoFAEnabled?: Prisma.BoolFilter<"User"> | boolean
-  twoFACode?: Prisma.StringNullableFilter<"User"> | string | null
-  twoFAExpires?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
-  phone?: Prisma.StringNullableFilter<"User"> | string | null
-  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
+  role?: Prisma.EnumRoleFilter<"User"> | $Enums.Role
+  isVerified?: Prisma.BoolFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  doctor?: Prisma.XOR<Prisma.DoctorNullableScalarRelationFilter, Prisma.DoctorWhereInput> | null
-  appointments?: Prisma.AppointmentListRelationFilter
-  actionHistory?: Prisma.AppointmentHistoryListRelationFilter
+  adminProfile?: Prisma.XOR<Prisma.AdminProfileNullableScalarRelationFilter, Prisma.AdminProfileWhereInput> | null
+  doctorProfile?: Prisma.XOR<Prisma.DoctorProfileNullableScalarRelationFilter, Prisma.DoctorProfileWhereInput> | null
+  patientProfile?: Prisma.XOR<Prisma.PatientProfileNullableScalarRelationFilter, Prisma.PatientProfileWhereInput> | null
+  hospitalManagerProfile?: Prisma.XOR<Prisma.HospitalManagerProfileNullableScalarRelationFilter, Prisma.HospitalManagerProfileWhereInput> | null
+  verifyOtp?: Prisma.OtpVerificationListRelationFilter
 }, "id" | "email" | "googleId">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  email?: Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   password?: Prisma.SortOrderInput | Prisma.SortOrder
   googleId?: Prisma.SortOrderInput | Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
-  twoFAEnabled?: Prisma.SortOrder
-  twoFACode?: Prisma.SortOrderInput | Prisma.SortOrder
-  twoFAExpires?: Prisma.SortOrderInput | Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
   role?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
-  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
-  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
   AND?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"User"> | number
-  name?: Prisma.StringWithAggregatesFilter<"User"> | string
-  email?: Prisma.StringWithAggregatesFilter<"User"> | string
+  id?: Prisma.StringWithAggregatesFilter<"User"> | string
+  email?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   password?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   googleId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  emailVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  twoFAEnabled?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  twoFACode?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  twoFAExpires?: Prisma.DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
-  phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
+  role?: Prisma.EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+  isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
-  name: string
-  email: string
+  id?: string
+  email?: string | null
   password?: string | null
   googleId?: string | null
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: string | null
-  twoFAExpires?: Date | string | null
-  phone?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
+  isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  doctor?: Prisma.DoctorCreateNestedOneWithoutUserInput
-  appointments?: Prisma.AppointmentCreateNestedManyWithoutPatientInput
-  actionHistory?: Prisma.AppointmentHistoryCreateNestedManyWithoutActionByInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  doctorProfile?: Prisma.DoctorProfileCreateNestedOneWithoutUserInput
+  patientProfile?: Prisma.PatientProfileCreateNestedOneWithoutUserInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileCreateNestedOneWithoutUserInput
+  verifyOtp?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
-  id?: number
-  name: string
-  email: string
+  id?: string
+  email?: string | null
   password?: string | null
   googleId?: string | null
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: string | null
-  twoFAExpires?: Date | string | null
-  phone?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
+  isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  doctor?: Prisma.DoctorUncheckedCreateNestedOneWithoutUserInput
-  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutPatientInput
-  actionHistory?: Prisma.AppointmentHistoryUncheckedCreateNestedManyWithoutActionByInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  doctorProfile?: Prisma.DoctorProfileUncheckedCreateNestedOneWithoutUserInput
+  patientProfile?: Prisma.PatientProfileUncheckedCreateNestedOneWithoutUserInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUncheckedCreateNestedOneWithoutUserInput
+  verifyOtp?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFAEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFACode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFAExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  doctor?: Prisma.DoctorUpdateOneWithoutUserNestedInput
-  appointments?: Prisma.AppointmentUpdateManyWithoutPatientNestedInput
-  actionHistory?: Prisma.AppointmentHistoryUpdateManyWithoutActionByNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  doctorProfile?: Prisma.DoctorProfileUpdateOneWithoutUserNestedInput
+  patientProfile?: Prisma.PatientProfileUpdateOneWithoutUserNestedInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUpdateOneWithoutUserNestedInput
+  verifyOtp?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFAEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFACode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFAExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  doctor?: Prisma.DoctorUncheckedUpdateOneWithoutUserNestedInput
-  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutPatientNestedInput
-  actionHistory?: Prisma.AppointmentHistoryUncheckedUpdateManyWithoutActionByNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  doctorProfile?: Prisma.DoctorProfileUncheckedUpdateOneWithoutUserNestedInput
+  patientProfile?: Prisma.PatientProfileUncheckedUpdateOneWithoutUserNestedInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUncheckedUpdateOneWithoutUserNestedInput
+  verifyOtp?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
-  id?: number
-  name: string
-  email: string
+  id?: string
+  email?: string | null
   password?: string | null
   googleId?: string | null
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: string | null
-  twoFAExpires?: Date | string | null
-  phone?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
+  isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFAEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFACode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFAExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFAEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFACode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFAExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
-  twoFAEnabled?: Prisma.SortOrder
-  twoFACode?: Prisma.SortOrder
-  twoFAExpires?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
-export type UserAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-}
-
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
-  twoFAEnabled?: Prisma.SortOrder
-  twoFACode?: Prisma.SortOrder
-  twoFAExpires?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   googleId?: Prisma.SortOrder
-  emailVerified?: Prisma.SortOrder
-  twoFAEnabled?: Prisma.SortOrder
-  twoFACode?: Prisma.SortOrder
-  twoFAExpires?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
   role?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type UserSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -556,328 +419,466 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
+export type EnumRoleFieldUpdateOperationsInput = {
+  set?: $Enums.Role
+}
+
 export type BoolFieldUpdateOperationsInput = {
   set?: boolean
-}
-
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
-export type EnumUserRoleFieldUpdateOperationsInput = {
-  set?: $Enums.UserRole
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type UserCreateNestedOneWithoutDoctorInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDoctorInput, Prisma.UserUncheckedCreateWithoutDoctorInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDoctorInput
+export type UserCreateNestedOneWithoutAdminProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAdminProfileInput, Prisma.UserUncheckedCreateWithoutAdminProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdminProfileInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutDoctorNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutDoctorInput, Prisma.UserUncheckedCreateWithoutDoctorInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDoctorInput
-  upsert?: Prisma.UserUpsertWithoutDoctorInput
+export type UserUpdateOneRequiredWithoutAdminProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAdminProfileInput, Prisma.UserUncheckedCreateWithoutAdminProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdminProfileInput
+  upsert?: Prisma.UserUpsertWithoutAdminProfileInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDoctorInput, Prisma.UserUpdateWithoutDoctorInput>, Prisma.UserUncheckedUpdateWithoutDoctorInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAdminProfileInput, Prisma.UserUpdateWithoutAdminProfileInput>, Prisma.UserUncheckedUpdateWithoutAdminProfileInput>
 }
 
-export type UserCreateNestedOneWithoutAppointmentsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAppointmentsInput, Prisma.UserUncheckedCreateWithoutAppointmentsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAppointmentsInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
-export type UserUpdateOneRequiredWithoutAppointmentsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutAppointmentsInput, Prisma.UserUncheckedCreateWithoutAppointmentsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAppointmentsInput
-  upsert?: Prisma.UserUpsertWithoutAppointmentsInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAppointmentsInput, Prisma.UserUpdateWithoutAppointmentsInput>, Prisma.UserUncheckedUpdateWithoutAppointmentsInput>
-}
-
-export type UserCreateNestedOneWithoutActionHistoryInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutActionHistoryInput, Prisma.UserUncheckedCreateWithoutActionHistoryInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutActionHistoryInput
+export type UserCreateNestedOneWithoutDoctorProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDoctorProfileInput, Prisma.UserUncheckedCreateWithoutDoctorProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDoctorProfileInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutActionHistoryNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutActionHistoryInput, Prisma.UserUncheckedCreateWithoutActionHistoryInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutActionHistoryInput
-  upsert?: Prisma.UserUpsertWithoutActionHistoryInput
+export type UserUpdateOneRequiredWithoutDoctorProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDoctorProfileInput, Prisma.UserUncheckedCreateWithoutDoctorProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDoctorProfileInput
+  upsert?: Prisma.UserUpsertWithoutDoctorProfileInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutActionHistoryInput, Prisma.UserUpdateWithoutActionHistoryInput>, Prisma.UserUncheckedUpdateWithoutActionHistoryInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDoctorProfileInput, Prisma.UserUpdateWithoutDoctorProfileInput>, Prisma.UserUncheckedUpdateWithoutDoctorProfileInput>
 }
 
-export type UserCreateWithoutDoctorInput = {
-  name: string
-  email: string
+export type UserCreateNestedOneWithoutPatientProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPatientProfileInput, Prisma.UserUncheckedCreateWithoutPatientProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPatientProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPatientProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPatientProfileInput, Prisma.UserUncheckedCreateWithoutPatientProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPatientProfileInput
+  upsert?: Prisma.UserUpsertWithoutPatientProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPatientProfileInput, Prisma.UserUpdateWithoutPatientProfileInput>, Prisma.UserUncheckedUpdateWithoutPatientProfileInput>
+}
+
+export type UserCreateNestedOneWithoutHospitalManagerProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutHospitalManagerProfileInput, Prisma.UserUncheckedCreateWithoutHospitalManagerProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutHospitalManagerProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutHospitalManagerProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutHospitalManagerProfileInput, Prisma.UserUncheckedCreateWithoutHospitalManagerProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutHospitalManagerProfileInput
+  upsert?: Prisma.UserUpsertWithoutHospitalManagerProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutHospitalManagerProfileInput, Prisma.UserUpdateWithoutHospitalManagerProfileInput>, Prisma.UserUncheckedUpdateWithoutHospitalManagerProfileInput>
+}
+
+export type UserCreateNestedOneWithoutVerifyOtpInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVerifyOtpInput, Prisma.UserUncheckedCreateWithoutVerifyOtpInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerifyOtpInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutVerifyOtpNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutVerifyOtpInput, Prisma.UserUncheckedCreateWithoutVerifyOtpInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutVerifyOtpInput
+  upsert?: Prisma.UserUpsertWithoutVerifyOtpInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutVerifyOtpInput, Prisma.UserUpdateWithoutVerifyOtpInput>, Prisma.UserUncheckedUpdateWithoutVerifyOtpInput>
+}
+
+export type UserCreateWithoutAdminProfileInput = {
+  id?: string
+  email?: string | null
   password?: string | null
   googleId?: string | null
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: string | null
-  twoFAExpires?: Date | string | null
-  phone?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
+  isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  appointments?: Prisma.AppointmentCreateNestedManyWithoutPatientInput
-  actionHistory?: Prisma.AppointmentHistoryCreateNestedManyWithoutActionByInput
+  doctorProfile?: Prisma.DoctorProfileCreateNestedOneWithoutUserInput
+  patientProfile?: Prisma.PatientProfileCreateNestedOneWithoutUserInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileCreateNestedOneWithoutUserInput
+  verifyOtp?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutDoctorInput = {
-  id?: number
-  name: string
-  email: string
+export type UserUncheckedCreateWithoutAdminProfileInput = {
+  id?: string
+  email?: string | null
   password?: string | null
   googleId?: string | null
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: string | null
-  twoFAExpires?: Date | string | null
-  phone?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
+  isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutPatientInput
-  actionHistory?: Prisma.AppointmentHistoryUncheckedCreateNestedManyWithoutActionByInput
+  doctorProfile?: Prisma.DoctorProfileUncheckedCreateNestedOneWithoutUserInput
+  patientProfile?: Prisma.PatientProfileUncheckedCreateNestedOneWithoutUserInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUncheckedCreateNestedOneWithoutUserInput
+  verifyOtp?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutDoctorInput = {
+export type UserCreateOrConnectWithoutAdminProfileInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutDoctorInput, Prisma.UserUncheckedCreateWithoutDoctorInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAdminProfileInput, Prisma.UserUncheckedCreateWithoutAdminProfileInput>
 }
 
-export type UserUpsertWithoutDoctorInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutDoctorInput, Prisma.UserUncheckedUpdateWithoutDoctorInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutDoctorInput, Prisma.UserUncheckedCreateWithoutDoctorInput>
+export type UserUpsertWithoutAdminProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAdminProfileInput, Prisma.UserUncheckedUpdateWithoutAdminProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAdminProfileInput, Prisma.UserUncheckedCreateWithoutAdminProfileInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutDoctorInput = {
+export type UserUpdateToOneWithWhereWithoutAdminProfileInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutDoctorInput, Prisma.UserUncheckedUpdateWithoutDoctorInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAdminProfileInput, Prisma.UserUncheckedUpdateWithoutAdminProfileInput>
 }
 
-export type UserUpdateWithoutDoctorInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+export type UserUpdateWithoutAdminProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFAEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFACode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFAExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  appointments?: Prisma.AppointmentUpdateManyWithoutPatientNestedInput
-  actionHistory?: Prisma.AppointmentHistoryUpdateManyWithoutActionByNestedInput
+  doctorProfile?: Prisma.DoctorProfileUpdateOneWithoutUserNestedInput
+  patientProfile?: Prisma.PatientProfileUpdateOneWithoutUserNestedInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUpdateOneWithoutUserNestedInput
+  verifyOtp?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutDoctorInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+export type UserUncheckedUpdateWithoutAdminProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFAEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFACode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFAExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutPatientNestedInput
-  actionHistory?: Prisma.AppointmentHistoryUncheckedUpdateManyWithoutActionByNestedInput
+  doctorProfile?: Prisma.DoctorProfileUncheckedUpdateOneWithoutUserNestedInput
+  patientProfile?: Prisma.PatientProfileUncheckedUpdateOneWithoutUserNestedInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUncheckedUpdateOneWithoutUserNestedInput
+  verifyOtp?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutAppointmentsInput = {
-  name: string
-  email: string
+export type UserCreateWithoutDoctorProfileInput = {
+  id?: string
+  email?: string | null
   password?: string | null
   googleId?: string | null
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: string | null
-  twoFAExpires?: Date | string | null
-  phone?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
+  isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  doctor?: Prisma.DoctorCreateNestedOneWithoutUserInput
-  actionHistory?: Prisma.AppointmentHistoryCreateNestedManyWithoutActionByInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  patientProfile?: Prisma.PatientProfileCreateNestedOneWithoutUserInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileCreateNestedOneWithoutUserInput
+  verifyOtp?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutAppointmentsInput = {
-  id?: number
-  name: string
-  email: string
+export type UserUncheckedCreateWithoutDoctorProfileInput = {
+  id?: string
+  email?: string | null
   password?: string | null
   googleId?: string | null
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: string | null
-  twoFAExpires?: Date | string | null
-  phone?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
+  isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  doctor?: Prisma.DoctorUncheckedCreateNestedOneWithoutUserInput
-  actionHistory?: Prisma.AppointmentHistoryUncheckedCreateNestedManyWithoutActionByInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  patientProfile?: Prisma.PatientProfileUncheckedCreateNestedOneWithoutUserInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUncheckedCreateNestedOneWithoutUserInput
+  verifyOtp?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutAppointmentsInput = {
+export type UserCreateOrConnectWithoutDoctorProfileInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutAppointmentsInput, Prisma.UserUncheckedCreateWithoutAppointmentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDoctorProfileInput, Prisma.UserUncheckedCreateWithoutDoctorProfileInput>
 }
 
-export type UserUpsertWithoutAppointmentsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutAppointmentsInput, Prisma.UserUncheckedUpdateWithoutAppointmentsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutAppointmentsInput, Prisma.UserUncheckedCreateWithoutAppointmentsInput>
+export type UserUpsertWithoutDoctorProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDoctorProfileInput, Prisma.UserUncheckedUpdateWithoutDoctorProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDoctorProfileInput, Prisma.UserUncheckedCreateWithoutDoctorProfileInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutAppointmentsInput = {
+export type UserUpdateToOneWithWhereWithoutDoctorProfileInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutAppointmentsInput, Prisma.UserUncheckedUpdateWithoutAppointmentsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDoctorProfileInput, Prisma.UserUncheckedUpdateWithoutDoctorProfileInput>
 }
 
-export type UserUpdateWithoutAppointmentsInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+export type UserUpdateWithoutDoctorProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFAEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFACode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFAExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  doctor?: Prisma.DoctorUpdateOneWithoutUserNestedInput
-  actionHistory?: Prisma.AppointmentHistoryUpdateManyWithoutActionByNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  patientProfile?: Prisma.PatientProfileUpdateOneWithoutUserNestedInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUpdateOneWithoutUserNestedInput
+  verifyOtp?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutAppointmentsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+export type UserUncheckedUpdateWithoutDoctorProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFAEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFACode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFAExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  doctor?: Prisma.DoctorUncheckedUpdateOneWithoutUserNestedInput
-  actionHistory?: Prisma.AppointmentHistoryUncheckedUpdateManyWithoutActionByNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  patientProfile?: Prisma.PatientProfileUncheckedUpdateOneWithoutUserNestedInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUncheckedUpdateOneWithoutUserNestedInput
+  verifyOtp?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutActionHistoryInput = {
-  name: string
-  email: string
+export type UserCreateWithoutPatientProfileInput = {
+  id?: string
+  email?: string | null
   password?: string | null
   googleId?: string | null
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: string | null
-  twoFAExpires?: Date | string | null
-  phone?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
+  isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  doctor?: Prisma.DoctorCreateNestedOneWithoutUserInput
-  appointments?: Prisma.AppointmentCreateNestedManyWithoutPatientInput
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  doctorProfile?: Prisma.DoctorProfileCreateNestedOneWithoutUserInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileCreateNestedOneWithoutUserInput
+  verifyOtp?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutActionHistoryInput = {
-  id?: number
-  name: string
-  email: string
+export type UserUncheckedCreateWithoutPatientProfileInput = {
+  id?: string
+  email?: string | null
   password?: string | null
   googleId?: string | null
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: string | null
-  twoFAExpires?: Date | string | null
-  phone?: string | null
-  role?: $Enums.UserRole
+  role: $Enums.Role
+  isVerified?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  doctor?: Prisma.DoctorUncheckedCreateNestedOneWithoutUserInput
-  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutPatientInput
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  doctorProfile?: Prisma.DoctorProfileUncheckedCreateNestedOneWithoutUserInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUncheckedCreateNestedOneWithoutUserInput
+  verifyOtp?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutActionHistoryInput = {
+export type UserCreateOrConnectWithoutPatientProfileInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutActionHistoryInput, Prisma.UserUncheckedCreateWithoutActionHistoryInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPatientProfileInput, Prisma.UserUncheckedCreateWithoutPatientProfileInput>
 }
 
-export type UserUpsertWithoutActionHistoryInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutActionHistoryInput, Prisma.UserUncheckedUpdateWithoutActionHistoryInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutActionHistoryInput, Prisma.UserUncheckedCreateWithoutActionHistoryInput>
+export type UserUpsertWithoutPatientProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPatientProfileInput, Prisma.UserUncheckedUpdateWithoutPatientProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPatientProfileInput, Prisma.UserUncheckedCreateWithoutPatientProfileInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutActionHistoryInput = {
+export type UserUpdateToOneWithWhereWithoutPatientProfileInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutActionHistoryInput, Prisma.UserUncheckedUpdateWithoutActionHistoryInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPatientProfileInput, Prisma.UserUncheckedUpdateWithoutPatientProfileInput>
 }
 
-export type UserUpdateWithoutActionHistoryInput = {
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+export type UserUpdateWithoutPatientProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFAEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFACode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFAExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  doctor?: Prisma.DoctorUpdateOneWithoutUserNestedInput
-  appointments?: Prisma.AppointmentUpdateManyWithoutPatientNestedInput
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  doctorProfile?: Prisma.DoctorProfileUpdateOneWithoutUserNestedInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUpdateOneWithoutUserNestedInput
+  verifyOtp?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutActionHistoryInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
+export type UserUncheckedUpdateWithoutPatientProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFAEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  twoFACode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  twoFAExpires?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  doctor?: Prisma.DoctorUncheckedUpdateOneWithoutUserNestedInput
-  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutPatientNestedInput
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  doctorProfile?: Prisma.DoctorProfileUncheckedUpdateOneWithoutUserNestedInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUncheckedUpdateOneWithoutUserNestedInput
+  verifyOtp?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutHospitalManagerProfileInput = {
+  id?: string
+  email?: string | null
+  password?: string | null
+  googleId?: string | null
+  role: $Enums.Role
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  doctorProfile?: Prisma.DoctorProfileCreateNestedOneWithoutUserInput
+  patientProfile?: Prisma.PatientProfileCreateNestedOneWithoutUserInput
+  verifyOtp?: Prisma.OtpVerificationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutHospitalManagerProfileInput = {
+  id?: string
+  email?: string | null
+  password?: string | null
+  googleId?: string | null
+  role: $Enums.Role
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  doctorProfile?: Prisma.DoctorProfileUncheckedCreateNestedOneWithoutUserInput
+  patientProfile?: Prisma.PatientProfileUncheckedCreateNestedOneWithoutUserInput
+  verifyOtp?: Prisma.OtpVerificationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutHospitalManagerProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutHospitalManagerProfileInput, Prisma.UserUncheckedCreateWithoutHospitalManagerProfileInput>
+}
+
+export type UserUpsertWithoutHospitalManagerProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutHospitalManagerProfileInput, Prisma.UserUncheckedUpdateWithoutHospitalManagerProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutHospitalManagerProfileInput, Prisma.UserUncheckedCreateWithoutHospitalManagerProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutHospitalManagerProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutHospitalManagerProfileInput, Prisma.UserUncheckedUpdateWithoutHospitalManagerProfileInput>
+}
+
+export type UserUpdateWithoutHospitalManagerProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  doctorProfile?: Prisma.DoctorProfileUpdateOneWithoutUserNestedInput
+  patientProfile?: Prisma.PatientProfileUpdateOneWithoutUserNestedInput
+  verifyOtp?: Prisma.OtpVerificationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutHospitalManagerProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  doctorProfile?: Prisma.DoctorProfileUncheckedUpdateOneWithoutUserNestedInput
+  patientProfile?: Prisma.PatientProfileUncheckedUpdateOneWithoutUserNestedInput
+  verifyOtp?: Prisma.OtpVerificationUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutVerifyOtpInput = {
+  id?: string
+  email?: string | null
+  password?: string | null
+  googleId?: string | null
+  role: $Enums.Role
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  adminProfile?: Prisma.AdminProfileCreateNestedOneWithoutUserInput
+  doctorProfile?: Prisma.DoctorProfileCreateNestedOneWithoutUserInput
+  patientProfile?: Prisma.PatientProfileCreateNestedOneWithoutUserInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutVerifyOtpInput = {
+  id?: string
+  email?: string | null
+  password?: string | null
+  googleId?: string | null
+  role: $Enums.Role
+  isVerified?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  adminProfile?: Prisma.AdminProfileUncheckedCreateNestedOneWithoutUserInput
+  doctorProfile?: Prisma.DoctorProfileUncheckedCreateNestedOneWithoutUserInput
+  patientProfile?: Prisma.PatientProfileUncheckedCreateNestedOneWithoutUserInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutVerifyOtpInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutVerifyOtpInput, Prisma.UserUncheckedCreateWithoutVerifyOtpInput>
+}
+
+export type UserUpsertWithoutVerifyOtpInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutVerifyOtpInput, Prisma.UserUncheckedUpdateWithoutVerifyOtpInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutVerifyOtpInput, Prisma.UserUncheckedCreateWithoutVerifyOtpInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutVerifyOtpInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutVerifyOtpInput, Prisma.UserUncheckedUpdateWithoutVerifyOtpInput>
+}
+
+export type UserUpdateWithoutVerifyOtpInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminProfile?: Prisma.AdminProfileUpdateOneWithoutUserNestedInput
+  doctorProfile?: Prisma.DoctorProfileUpdateOneWithoutUserNestedInput
+  patientProfile?: Prisma.PatientProfileUpdateOneWithoutUserNestedInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutVerifyOtpInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  googleId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  adminProfile?: Prisma.AdminProfileUncheckedUpdateOneWithoutUserNestedInput
+  doctorProfile?: Prisma.DoctorProfileUncheckedUpdateOneWithoutUserNestedInput
+  patientProfile?: Prisma.PatientProfileUncheckedUpdateOneWithoutUserNestedInput
+  hospitalManagerProfile?: Prisma.HospitalManagerProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -886,13 +887,11 @@ export type UserUncheckedUpdateWithoutActionHistoryInput = {
  */
 
 export type UserCountOutputType = {
-  appointments: number
-  actionHistory: number
+  verifyOtp: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  appointments?: boolean | UserCountOutputTypeCountAppointmentsArgs
-  actionHistory?: boolean | UserCountOutputTypeCountActionHistoryArgs
+  verifyOtp?: boolean | UserCountOutputTypeCountVerifyOtpArgs
 }
 
 /**
@@ -908,91 +907,68 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountAppointmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AppointmentWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountActionHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.AppointmentHistoryWhereInput
+export type UserCountOutputTypeCountVerifyOtpArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.OtpVerificationWhereInput
 }
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
   email?: boolean
   password?: boolean
   googleId?: boolean
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: boolean
-  twoFAExpires?: boolean
-  phone?: boolean
   role?: boolean
+  isVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  doctor?: boolean | Prisma.User$doctorArgs<ExtArgs>
-  appointments?: boolean | Prisma.User$appointmentsArgs<ExtArgs>
-  actionHistory?: boolean | Prisma.User$actionHistoryArgs<ExtArgs>
+  adminProfile?: boolean | Prisma.User$adminProfileArgs<ExtArgs>
+  doctorProfile?: boolean | Prisma.User$doctorProfileArgs<ExtArgs>
+  patientProfile?: boolean | Prisma.User$patientProfileArgs<ExtArgs>
+  hospitalManagerProfile?: boolean | Prisma.User$hospitalManagerProfileArgs<ExtArgs>
+  verifyOtp?: boolean | Prisma.User$verifyOtpArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
   email?: boolean
   password?: boolean
   googleId?: boolean
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: boolean
-  twoFAExpires?: boolean
-  phone?: boolean
   role?: boolean
+  isVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
   email?: boolean
   password?: boolean
   googleId?: boolean
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: boolean
-  twoFAExpires?: boolean
-  phone?: boolean
   role?: boolean
+  isVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
-  name?: boolean
   email?: boolean
   password?: boolean
   googleId?: boolean
-  emailVerified?: boolean
-  twoFAEnabled?: boolean
-  twoFACode?: boolean
-  twoFAExpires?: boolean
-  phone?: boolean
   role?: boolean
+  isVerified?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "password" | "googleId" | "emailVerified" | "twoFAEnabled" | "twoFACode" | "twoFAExpires" | "phone" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "googleId" | "role" | "isVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  doctor?: boolean | Prisma.User$doctorArgs<ExtArgs>
-  appointments?: boolean | Prisma.User$appointmentsArgs<ExtArgs>
-  actionHistory?: boolean | Prisma.User$actionHistoryArgs<ExtArgs>
+  adminProfile?: boolean | Prisma.User$adminProfileArgs<ExtArgs>
+  doctorProfile?: boolean | Prisma.User$doctorProfileArgs<ExtArgs>
+  patientProfile?: boolean | Prisma.User$patientProfileArgs<ExtArgs>
+  hospitalManagerProfile?: boolean | Prisma.User$hospitalManagerProfileArgs<ExtArgs>
+  verifyOtp?: boolean | Prisma.User$verifyOtpArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1001,22 +977,19 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    doctor: Prisma.$DoctorPayload<ExtArgs> | null
-    appointments: Prisma.$AppointmentPayload<ExtArgs>[]
-    actionHistory: Prisma.$AppointmentHistoryPayload<ExtArgs>[]
+    adminProfile: Prisma.$AdminProfilePayload<ExtArgs> | null
+    doctorProfile: Prisma.$DoctorProfilePayload<ExtArgs> | null
+    patientProfile: Prisma.$PatientProfilePayload<ExtArgs> | null
+    hospitalManagerProfile: Prisma.$HospitalManagerProfilePayload<ExtArgs> | null
+    verifyOtp: Prisma.$OtpVerificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
-    name: string
-    email: string
+    id: string
+    email: string | null
     password: string | null
     googleId: string | null
-    emailVerified: boolean
-    twoFAEnabled: boolean
-    twoFACode: string | null
-    twoFAExpires: Date | null
-    phone: string | null
-    role: $Enums.UserRole
+    role: $Enums.Role
+    isVerified: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1413,9 +1386,11 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  doctor<T extends Prisma.User$doctorArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$doctorArgs<ExtArgs>>): Prisma.Prisma__DoctorClient<runtime.Types.Result.GetResult<Prisma.$DoctorPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  appointments<T extends Prisma.User$appointmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  actionHistory<T extends Prisma.User$actionHistoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$actionHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppointmentHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  adminProfile<T extends Prisma.User$adminProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adminProfileArgs<ExtArgs>>): Prisma.Prisma__AdminProfileClient<runtime.Types.Result.GetResult<Prisma.$AdminProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  doctorProfile<T extends Prisma.User$doctorProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$doctorProfileArgs<ExtArgs>>): Prisma.Prisma__DoctorProfileClient<runtime.Types.Result.GetResult<Prisma.$DoctorProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  patientProfile<T extends Prisma.User$patientProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$patientProfileArgs<ExtArgs>>): Prisma.Prisma__PatientProfileClient<runtime.Types.Result.GetResult<Prisma.$PatientProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  hospitalManagerProfile<T extends Prisma.User$hospitalManagerProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$hospitalManagerProfileArgs<ExtArgs>>): Prisma.Prisma__HospitalManagerProfileClient<runtime.Types.Result.GetResult<Prisma.$HospitalManagerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  verifyOtp<T extends Prisma.User$verifyOtpArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$verifyOtpArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OtpVerificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1445,17 +1420,12 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the User model
  */
 export interface UserFieldRefs {
-  readonly id: Prisma.FieldRef<"User", 'Int'>
-  readonly name: Prisma.FieldRef<"User", 'String'>
+  readonly id: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly googleId: Prisma.FieldRef<"User", 'String'>
-  readonly emailVerified: Prisma.FieldRef<"User", 'Boolean'>
-  readonly twoFAEnabled: Prisma.FieldRef<"User", 'Boolean'>
-  readonly twoFACode: Prisma.FieldRef<"User", 'String'>
-  readonly twoFAExpires: Prisma.FieldRef<"User", 'DateTime'>
-  readonly phone: Prisma.FieldRef<"User", 'String'>
-  readonly role: Prisma.FieldRef<"User", 'UserRole'>
+  readonly role: Prisma.FieldRef<"User", 'Role'>
+  readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -1846,70 +1816,103 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.doctor
+ * User.adminProfile
  */
-export type User$doctorArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$adminProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Doctor
+   * Select specific fields to fetch from the AdminProfile
    */
-  select?: Prisma.DoctorSelect<ExtArgs> | null
+  select?: Prisma.AdminProfileSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Doctor
+   * Omit specific fields from the AdminProfile
    */
-  omit?: Prisma.DoctorOmit<ExtArgs> | null
+  omit?: Prisma.AdminProfileOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DoctorInclude<ExtArgs> | null
-  where?: Prisma.DoctorWhereInput
+  include?: Prisma.AdminProfileInclude<ExtArgs> | null
+  where?: Prisma.AdminProfileWhereInput
 }
 
 /**
- * User.appointments
+ * User.doctorProfile
  */
-export type User$appointmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$doctorProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Appointment
+   * Select specific fields to fetch from the DoctorProfile
    */
-  select?: Prisma.AppointmentSelect<ExtArgs> | null
+  select?: Prisma.DoctorProfileSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Appointment
+   * Omit specific fields from the DoctorProfile
    */
-  omit?: Prisma.AppointmentOmit<ExtArgs> | null
+  omit?: Prisma.DoctorProfileOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.AppointmentInclude<ExtArgs> | null
-  where?: Prisma.AppointmentWhereInput
-  orderBy?: Prisma.AppointmentOrderByWithRelationInput | Prisma.AppointmentOrderByWithRelationInput[]
-  cursor?: Prisma.AppointmentWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.AppointmentScalarFieldEnum | Prisma.AppointmentScalarFieldEnum[]
+  include?: Prisma.DoctorProfileInclude<ExtArgs> | null
+  where?: Prisma.DoctorProfileWhereInput
 }
 
 /**
- * User.actionHistory
+ * User.patientProfile
  */
-export type User$actionHistoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$patientProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the AppointmentHistory
+   * Select specific fields to fetch from the PatientProfile
    */
-  select?: Prisma.AppointmentHistorySelect<ExtArgs> | null
+  select?: Prisma.PatientProfileSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the AppointmentHistory
+   * Omit specific fields from the PatientProfile
    */
-  omit?: Prisma.AppointmentHistoryOmit<ExtArgs> | null
+  omit?: Prisma.PatientProfileOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.AppointmentHistoryInclude<ExtArgs> | null
-  where?: Prisma.AppointmentHistoryWhereInput
-  orderBy?: Prisma.AppointmentHistoryOrderByWithRelationInput | Prisma.AppointmentHistoryOrderByWithRelationInput[]
-  cursor?: Prisma.AppointmentHistoryWhereUniqueInput
+  include?: Prisma.PatientProfileInclude<ExtArgs> | null
+  where?: Prisma.PatientProfileWhereInput
+}
+
+/**
+ * User.hospitalManagerProfile
+ */
+export type User$hospitalManagerProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the HospitalManagerProfile
+   */
+  select?: Prisma.HospitalManagerProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the HospitalManagerProfile
+   */
+  omit?: Prisma.HospitalManagerProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.HospitalManagerProfileInclude<ExtArgs> | null
+  where?: Prisma.HospitalManagerProfileWhereInput
+}
+
+/**
+ * User.verifyOtp
+ */
+export type User$verifyOtpArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OtpVerification
+   */
+  select?: Prisma.OtpVerificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OtpVerification
+   */
+  omit?: Prisma.OtpVerificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OtpVerificationInclude<ExtArgs> | null
+  where?: Prisma.OtpVerificationWhereInput
+  orderBy?: Prisma.OtpVerificationOrderByWithRelationInput | Prisma.OtpVerificationOrderByWithRelationInput[]
+  cursor?: Prisma.OtpVerificationWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.AppointmentHistoryScalarFieldEnum | Prisma.AppointmentHistoryScalarFieldEnum[]
+  distinct?: Prisma.OtpVerificationScalarFieldEnum | Prisma.OtpVerificationScalarFieldEnum[]
 }
 
 /**
