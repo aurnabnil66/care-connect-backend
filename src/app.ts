@@ -1,24 +1,39 @@
 import express from "express";
 import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-import userRoutes from "@/routes/user.route";
-import authRoutes from "@/routes/auth.route";
+import cors from "cors";
+import http from "http";
+
+import { ApolloServer } from "@apollo/server";
+import { expressMiddleware } from "@as-integrations/express5";
+
+import { typeDefs } from "@/graphql/schema";
+import { resolvers } from "@/graphql/resolver";
+import { createContext } from "@/graphql/context";
 
 dotenv.config();
 
-const app = express();
+export const app = express();
 
-app.use(express.json());
+export const httpServer = http.createServer(app);
 
-app.use(cookieParser());
-
-// Health check
-app.get("/", (req, res) => {
-  res.json({ message: "API is running..." });
+// Create Apollo Server
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
 });
 
-// Mount routes
-app.use("/api/users", userRoutes);
-app.use("/api/auth", authRoutes);
+async function startServer() {
+  await server.start();
 
-export default app;
+  app.use(cors());
+  app.use(express.json());
+
+  app.use(
+    "/graphql",
+    expressMiddleware(server, {
+      context: async ({ req }) => createContext({ req }),
+    }),
+  );
+}
+
+startServer();
