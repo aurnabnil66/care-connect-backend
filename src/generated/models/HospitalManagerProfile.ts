@@ -20,22 +20,42 @@ export type HospitalManagerProfileModel = runtime.Types.Result.DefaultSelection<
 
 export type AggregateHospitalManagerProfile = {
   _count: HospitalManagerProfileCountAggregateOutputType | null
+  _avg: HospitalManagerProfileAvgAggregateOutputType | null
+  _sum: HospitalManagerProfileSumAggregateOutputType | null
   _min: HospitalManagerProfileMinAggregateOutputType | null
   _max: HospitalManagerProfileMaxAggregateOutputType | null
 }
 
+export type HospitalManagerProfileAvgAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  hospitalId: number | null
+}
+
+export type HospitalManagerProfileSumAggregateOutputType = {
+  id: number | null
+  userId: number | null
+  hospitalId: number | null
+}
+
 export type HospitalManagerProfileMinAggregateOutputType = {
-  id: string | null
-  userId: string | null
+  id: number | null
+  userId: number | null
   employeeId: string | null
-  hospitalId: string | null
+  hospitalId: number | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
 }
 
 export type HospitalManagerProfileMaxAggregateOutputType = {
-  id: string | null
-  userId: string | null
+  id: number | null
+  userId: number | null
   employeeId: string | null
-  hospitalId: string | null
+  hospitalId: number | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
 }
 
 export type HospitalManagerProfileCountAggregateOutputType = {
@@ -43,15 +63,33 @@ export type HospitalManagerProfileCountAggregateOutputType = {
   userId: number
   employeeId: number
   hospitalId: number
+  createdAt: number
+  updatedAt: number
+  deletedAt: number
   _all: number
 }
 
+
+export type HospitalManagerProfileAvgAggregateInputType = {
+  id?: true
+  userId?: true
+  hospitalId?: true
+}
+
+export type HospitalManagerProfileSumAggregateInputType = {
+  id?: true
+  userId?: true
+  hospitalId?: true
+}
 
 export type HospitalManagerProfileMinAggregateInputType = {
   id?: true
   userId?: true
   employeeId?: true
   hospitalId?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
 }
 
 export type HospitalManagerProfileMaxAggregateInputType = {
@@ -59,6 +97,9 @@ export type HospitalManagerProfileMaxAggregateInputType = {
   userId?: true
   employeeId?: true
   hospitalId?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
 }
 
 export type HospitalManagerProfileCountAggregateInputType = {
@@ -66,6 +107,9 @@ export type HospitalManagerProfileCountAggregateInputType = {
   userId?: true
   employeeId?: true
   hospitalId?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -107,6 +151,18 @@ export type HospitalManagerProfileAggregateArgs<ExtArgs extends runtime.Types.Ex
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: HospitalManagerProfileAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: HospitalManagerProfileSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: HospitalManagerProfileMinAggregateInputType
@@ -137,16 +193,23 @@ export type HospitalManagerProfileGroupByArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   _count?: HospitalManagerProfileCountAggregateInputType | true
+  _avg?: HospitalManagerProfileAvgAggregateInputType
+  _sum?: HospitalManagerProfileSumAggregateInputType
   _min?: HospitalManagerProfileMinAggregateInputType
   _max?: HospitalManagerProfileMaxAggregateInputType
 }
 
 export type HospitalManagerProfileGroupByOutputType = {
-  id: string
-  userId: string
+  id: number
+  userId: number
   employeeId: string
-  hospitalId: string
+  hospitalId: number
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date | null
   _count: HospitalManagerProfileCountAggregateOutputType | null
+  _avg: HospitalManagerProfileAvgAggregateOutputType | null
+  _sum: HospitalManagerProfileSumAggregateOutputType | null
   _min: HospitalManagerProfileMinAggregateOutputType | null
   _max: HospitalManagerProfileMaxAggregateOutputType | null
 }
@@ -170,10 +233,13 @@ export type HospitalManagerProfileWhereInput = {
   AND?: Prisma.HospitalManagerProfileWhereInput | Prisma.HospitalManagerProfileWhereInput[]
   OR?: Prisma.HospitalManagerProfileWhereInput[]
   NOT?: Prisma.HospitalManagerProfileWhereInput | Prisma.HospitalManagerProfileWhereInput[]
-  id?: Prisma.StringFilter<"HospitalManagerProfile"> | string
-  userId?: Prisma.StringFilter<"HospitalManagerProfile"> | string
+  id?: Prisma.IntFilter<"HospitalManagerProfile"> | number
+  userId?: Prisma.IntFilter<"HospitalManagerProfile"> | number
   employeeId?: Prisma.StringFilter<"HospitalManagerProfile"> | string
-  hospitalId?: Prisma.StringFilter<"HospitalManagerProfile"> | string
+  hospitalId?: Prisma.IntFilter<"HospitalManagerProfile"> | number
+  createdAt?: Prisma.DateTimeFilter<"HospitalManagerProfile"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"HospitalManagerProfile"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"HospitalManagerProfile"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   hospital?: Prisma.XOR<Prisma.HospitalScalarRelationFilter, Prisma.HospitalWhereInput>
 }
@@ -183,18 +249,24 @@ export type HospitalManagerProfileOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   hospitalId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   hospital?: Prisma.HospitalOrderByWithRelationInput
 }
 
 export type HospitalManagerProfileWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
-  userId?: string
+  id?: number
+  userId?: number
   employeeId?: string
   AND?: Prisma.HospitalManagerProfileWhereInput | Prisma.HospitalManagerProfileWhereInput[]
   OR?: Prisma.HospitalManagerProfileWhereInput[]
   NOT?: Prisma.HospitalManagerProfileWhereInput | Prisma.HospitalManagerProfileWhereInput[]
-  hospitalId?: Prisma.StringFilter<"HospitalManagerProfile"> | string
+  hospitalId?: Prisma.IntFilter<"HospitalManagerProfile"> | number
+  createdAt?: Prisma.DateTimeFilter<"HospitalManagerProfile"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"HospitalManagerProfile"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"HospitalManagerProfile"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   hospital?: Prisma.XOR<Prisma.HospitalScalarRelationFilter, Prisma.HospitalWhereInput>
 }, "id" | "userId" | "employeeId">
@@ -204,66 +276,92 @@ export type HospitalManagerProfileOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   hospitalId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.HospitalManagerProfileCountOrderByAggregateInput
+  _avg?: Prisma.HospitalManagerProfileAvgOrderByAggregateInput
   _max?: Prisma.HospitalManagerProfileMaxOrderByAggregateInput
   _min?: Prisma.HospitalManagerProfileMinOrderByAggregateInput
+  _sum?: Prisma.HospitalManagerProfileSumOrderByAggregateInput
 }
 
 export type HospitalManagerProfileScalarWhereWithAggregatesInput = {
   AND?: Prisma.HospitalManagerProfileScalarWhereWithAggregatesInput | Prisma.HospitalManagerProfileScalarWhereWithAggregatesInput[]
   OR?: Prisma.HospitalManagerProfileScalarWhereWithAggregatesInput[]
   NOT?: Prisma.HospitalManagerProfileScalarWhereWithAggregatesInput | Prisma.HospitalManagerProfileScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"HospitalManagerProfile"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"HospitalManagerProfile"> | string
+  id?: Prisma.IntWithAggregatesFilter<"HospitalManagerProfile"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"HospitalManagerProfile"> | number
   employeeId?: Prisma.StringWithAggregatesFilter<"HospitalManagerProfile"> | string
-  hospitalId?: Prisma.StringWithAggregatesFilter<"HospitalManagerProfile"> | string
+  hospitalId?: Prisma.IntWithAggregatesFilter<"HospitalManagerProfile"> | number
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"HospitalManagerProfile"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"HospitalManagerProfile"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"HospitalManagerProfile"> | Date | string | null
 }
 
 export type HospitalManagerProfileCreateInput = {
-  id?: string
   employeeId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutHospitalManagerProfileInput
   hospital: Prisma.HospitalCreateNestedOneWithoutManagersInput
 }
 
 export type HospitalManagerProfileUncheckedCreateInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   employeeId: string
-  hospitalId: string
+  hospitalId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type HospitalManagerProfileUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutHospitalManagerProfileNestedInput
   hospital?: Prisma.HospitalUpdateOneRequiredWithoutManagersNestedInput
 }
 
 export type HospitalManagerProfileUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  hospitalId?: Prisma.StringFieldUpdateOperationsInput | string
+  hospitalId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type HospitalManagerProfileCreateManyInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   employeeId: string
-  hospitalId: string
+  hospitalId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type HospitalManagerProfileUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type HospitalManagerProfileUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  hospitalId?: Prisma.StringFieldUpdateOperationsInput | string
+  hospitalId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type HospitalManagerProfileNullableScalarRelationFilter = {
@@ -276,6 +374,15 @@ export type HospitalManagerProfileCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   hospitalId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+}
+
+export type HospitalManagerProfileAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  hospitalId?: Prisma.SortOrder
 }
 
 export type HospitalManagerProfileMaxOrderByAggregateInput = {
@@ -283,12 +390,24 @@ export type HospitalManagerProfileMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
   hospitalId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type HospitalManagerProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   employeeId?: Prisma.SortOrder
+  hospitalId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+}
+
+export type HospitalManagerProfileSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   hospitalId?: Prisma.SortOrder
 }
 
@@ -377,15 +496,20 @@ export type HospitalManagerProfileUncheckedUpdateManyWithoutHospitalNestedInput 
 }
 
 export type HospitalManagerProfileCreateWithoutUserInput = {
-  id?: string
   employeeId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   hospital: Prisma.HospitalCreateNestedOneWithoutManagersInput
 }
 
 export type HospitalManagerProfileUncheckedCreateWithoutUserInput = {
-  id?: string
+  id?: number
   employeeId: string
-  hospitalId: string
+  hospitalId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type HospitalManagerProfileCreateOrConnectWithoutUserInput = {
@@ -405,27 +529,37 @@ export type HospitalManagerProfileUpdateToOneWithWhereWithoutUserInput = {
 }
 
 export type HospitalManagerProfileUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   hospital?: Prisma.HospitalUpdateOneRequiredWithoutManagersNestedInput
 }
 
 export type HospitalManagerProfileUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  hospitalId?: Prisma.StringFieldUpdateOperationsInput | string
+  hospitalId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type HospitalManagerProfileCreateWithoutHospitalInput = {
-  id?: string
   employeeId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutHospitalManagerProfileInput
 }
 
 export type HospitalManagerProfileUncheckedCreateWithoutHospitalInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   employeeId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type HospitalManagerProfileCreateOrConnectWithoutHospitalInput = {
@@ -458,34 +592,48 @@ export type HospitalManagerProfileScalarWhereInput = {
   AND?: Prisma.HospitalManagerProfileScalarWhereInput | Prisma.HospitalManagerProfileScalarWhereInput[]
   OR?: Prisma.HospitalManagerProfileScalarWhereInput[]
   NOT?: Prisma.HospitalManagerProfileScalarWhereInput | Prisma.HospitalManagerProfileScalarWhereInput[]
-  id?: Prisma.StringFilter<"HospitalManagerProfile"> | string
-  userId?: Prisma.StringFilter<"HospitalManagerProfile"> | string
+  id?: Prisma.IntFilter<"HospitalManagerProfile"> | number
+  userId?: Prisma.IntFilter<"HospitalManagerProfile"> | number
   employeeId?: Prisma.StringFilter<"HospitalManagerProfile"> | string
-  hospitalId?: Prisma.StringFilter<"HospitalManagerProfile"> | string
+  hospitalId?: Prisma.IntFilter<"HospitalManagerProfile"> | number
+  createdAt?: Prisma.DateTimeFilter<"HospitalManagerProfile"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"HospitalManagerProfile"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"HospitalManagerProfile"> | Date | string | null
 }
 
 export type HospitalManagerProfileCreateManyHospitalInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   employeeId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type HospitalManagerProfileUpdateWithoutHospitalInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutHospitalManagerProfileNestedInput
 }
 
 export type HospitalManagerProfileUncheckedUpdateWithoutHospitalInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type HospitalManagerProfileUncheckedUpdateManyWithoutHospitalInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   employeeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -495,6 +643,9 @@ export type HospitalManagerProfileSelect<ExtArgs extends runtime.Types.Extension
   userId?: boolean
   employeeId?: boolean
   hospitalId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   hospital?: boolean | Prisma.HospitalDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hospitalManagerProfile"]>
@@ -504,6 +655,9 @@ export type HospitalManagerProfileSelectCreateManyAndReturn<ExtArgs extends runt
   userId?: boolean
   employeeId?: boolean
   hospitalId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   hospital?: boolean | Prisma.HospitalDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hospitalManagerProfile"]>
@@ -513,6 +667,9 @@ export type HospitalManagerProfileSelectUpdateManyAndReturn<ExtArgs extends runt
   userId?: boolean
   employeeId?: boolean
   hospitalId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   hospital?: boolean | Prisma.HospitalDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["hospitalManagerProfile"]>
@@ -522,9 +679,12 @@ export type HospitalManagerProfileSelectScalar = {
   userId?: boolean
   employeeId?: boolean
   hospitalId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
 }
 
-export type HospitalManagerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "employeeId" | "hospitalId", ExtArgs["result"]["hospitalManagerProfile"]>
+export type HospitalManagerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "employeeId" | "hospitalId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["hospitalManagerProfile"]>
 export type HospitalManagerProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   hospital?: boolean | Prisma.HospitalDefaultArgs<ExtArgs>
@@ -545,10 +705,13 @@ export type $HospitalManagerProfilePayload<ExtArgs extends runtime.Types.Extensi
     hospital: Prisma.$HospitalPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    userId: string
+    id: number
+    userId: number
     employeeId: string
-    hospitalId: string
+    hospitalId: number
+    createdAt: Date
+    updatedAt: Date
+    deletedAt: Date | null
   }, ExtArgs["result"]["hospitalManagerProfile"]>
   composites: {}
 }
@@ -974,10 +1137,13 @@ export interface Prisma__HospitalManagerProfileClient<T, Null = never, ExtArgs e
  * Fields of the HospitalManagerProfile model
  */
 export interface HospitalManagerProfileFieldRefs {
-  readonly id: Prisma.FieldRef<"HospitalManagerProfile", 'String'>
-  readonly userId: Prisma.FieldRef<"HospitalManagerProfile", 'String'>
+  readonly id: Prisma.FieldRef<"HospitalManagerProfile", 'Int'>
+  readonly userId: Prisma.FieldRef<"HospitalManagerProfile", 'Int'>
   readonly employeeId: Prisma.FieldRef<"HospitalManagerProfile", 'String'>
-  readonly hospitalId: Prisma.FieldRef<"HospitalManagerProfile", 'String'>
+  readonly hospitalId: Prisma.FieldRef<"HospitalManagerProfile", 'Int'>
+  readonly createdAt: Prisma.FieldRef<"HospitalManagerProfile", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"HospitalManagerProfile", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"HospitalManagerProfile", 'DateTime'>
 }
     
 

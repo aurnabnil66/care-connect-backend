@@ -7,7 +7,7 @@ datasource db {
   provider = "postgresql"
 }
 
-// ------------------------ enum for roles ------------------------
+// ------------------------ enums ------------------------
 enum Role {
   ADMIN
   DOCTOR
@@ -15,7 +15,6 @@ enum Role {
   HOSPITAL_MANAGER
 }
 
-// ------------------------ enum for appointment status ------------------------
 enum AppointmentStatus {
   PENDING
   CONFIRMED
@@ -23,7 +22,6 @@ enum AppointmentStatus {
   CANCELLED
 }
 
-// ------------------------ enum for otp type ------------------------
 enum OtpType {
   EMAIL_VERIFICATION
   PASSWORD_RESET
@@ -31,14 +29,15 @@ enum OtpType {
 
 // ------------------------ main authentication table ------------------------
 model User {
-  id         String   @id @default(uuid())
-  email      String?  @unique
+  id         Int       @id @default(autoincrement())
+  email      String?   @unique
   password   String?
-  googleId   String?  @unique
+  googleId   String?   @unique
   role       Role
-  isVerified Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  isVerified Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
 
   // Relationships
   adminProfile           AdminProfile?
@@ -48,24 +47,31 @@ model User {
   verifyOtp              OtpVerification[]
 }
 
-// ------------------------ admin profile (one to one with user) ------------------------
+// ------------------------ admin profile (one-to-one with user) ------------------------
 model AdminProfile {
-  id     String @id @default(uuid())
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 // ------------------------ doctor profile ------------------------
 model DoctorProfile {
-  id             String  @id @default(uuid())
-  userId         String  @unique
-  doctorId       String  @unique
+  id             Int       @id @default(autoincrement())
+  userId         Int       @unique
+  doctorId       String    @unique
   name           String
   phone          String?
   designation    String?
   specialization String?
-  user           User    @relation(fields: [userId], references: [id])
+  user           User      @relation(fields: [userId], references: [id])
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
 
+  // Relationships
   hospitals     DoctorHospital[]
   availability  Availability[]
   appointments  Appointment[]
@@ -74,102 +80,116 @@ model DoctorProfile {
 
 // ------------------------ patient profile ------------------------
 model PatientProfile {
-  id        String  @id @default(uuid())
-  userId    String  @unique
-  patientId String  @unique
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  patientId String    @unique
   name      String
   phone     String?
-  user      User    @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   appointments  Appointment[]
   prescriptions Prescription[]
 }
 
-// ------------------------ hospital manager profile (each manager belongs to one hospital) ------------------------
+// ------------------------ hospital manager profile ------------------------
 model HospitalManagerProfile {
-  id         String   @id @default(uuid())
-  userId     String   @unique
-  employeeId String   @unique
-  hospitalId String
-  user       User     @relation(fields: [userId], references: [id])
-  hospital   Hospital @relation(fields: [hospitalId], references: [id])
+  id         Int       @id @default(autoincrement())
+  userId     Int       @unique
+  employeeId String    @unique
+  hospitalId Int
+  user       User      @relation(fields: [userId], references: [id])
+  hospital   Hospital  @relation(fields: [hospitalId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
 }
 
 // ------------------------ hospital ------------------------
 model Hospital {
-  id        String   @id @default(uuid())
+  id        Int       @id @default(autoincrement())
   name      String
   address   String
   city      String
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   doctors      DoctorHospital[]
   managers     HospitalManagerProfile[]
   appointments Appointment[]
 }
 
-// ------------------------ doctor hospital (many to many) ------------------------
-// ------------------------ junction table for doctor and hospital ------------------------
+// ------------------------ doctor-hospital junction table ------------------------
 model DoctorHospital {
-  id         String @id @default(uuid())
-  doctorId   String
-  hospitalId String
+  id         Int @id @default(autoincrement())
+  doctorId   Int
+  hospitalId Int
 
   doctor   DoctorProfile @relation(fields: [doctorId], references: [id])
   hospital Hospital      @relation(fields: [hospitalId], references: [id])
 
-  @@unique([doctorId, hospitalId]) // prevents duplicate assignments
+  @@unique([doctorId, hospitalId])
 }
 
 // ------------------------ availability ------------------------
 model Availability {
-  id        String   @id @default(uuid())
-  doctorId  String
+  id        Int       @id @default(autoincrement())
+  doctorId  Int
   date      DateTime
   startTime String
   endTime   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   doctor DoctorProfile @relation(fields: [doctorId], references: [id])
 }
 
 // ------------------------ appointment ------------------------
 model Appointment {
-  id         String            @id @default(uuid())
-  patientId  String
-  doctorId   String
-  hospitalId String
+  id         Int               @id @default(autoincrement())
+  patientId  Int
+  doctorId   Int
+  hospitalId Int
   date       DateTime
   time       String
   status     AppointmentStatus @default(PENDING)
   createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  deletedAt  DateTime?
 
   patient  PatientProfile @relation(fields: [patientId], references: [id])
   doctor   DoctorProfile  @relation(fields: [doctorId], references: [id])
   hospital Hospital       @relation(fields: [hospitalId], references: [id])
 
-  prescription Prescription? // one appointment can have only one prescription
+  prescription Prescription?
 }
 
 // ------------------------ prescription ------------------------
 model Prescription {
-  id            String   @id @default(uuid())
-  appointmentId String   @unique
-  patientId     String
-  doctorId      String
+  id            Int       @id @default(autoincrement())
+  appointmentId Int       @unique
+  patientId     Int
+  doctorId      Int
   fileUrl       String
-  createdAt     DateTime @default(now())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
 
   appointment Appointment    @relation(fields: [appointmentId], references: [id])
   patient     PatientProfile @relation(fields: [patientId], references: [id])
   doctor      DoctorProfile  @relation(fields: [doctorId], references: [id])
 }
 
-// ------------------------ otp verification ------------------------
+// ------------------------ OTP verification ------------------------
 model OtpVerification {
-  id        String   @id @default(uuid())
-  userId    String
+  id        Int      @id @default(autoincrement())
+  userId    Int
   code      String
-  type      OtpType // determines the purpose of the OTP
+  type      OtpType
   expiresAt DateTime
   used      Boolean  @default(false)
   attempts  Int      @default(0)

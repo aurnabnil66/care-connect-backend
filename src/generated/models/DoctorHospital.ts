@@ -20,20 +20,34 @@ export type DoctorHospitalModel = runtime.Types.Result.DefaultSelection<Prisma.$
 
 export type AggregateDoctorHospital = {
   _count: DoctorHospitalCountAggregateOutputType | null
+  _avg: DoctorHospitalAvgAggregateOutputType | null
+  _sum: DoctorHospitalSumAggregateOutputType | null
   _min: DoctorHospitalMinAggregateOutputType | null
   _max: DoctorHospitalMaxAggregateOutputType | null
 }
 
+export type DoctorHospitalAvgAggregateOutputType = {
+  id: number | null
+  doctorId: number | null
+  hospitalId: number | null
+}
+
+export type DoctorHospitalSumAggregateOutputType = {
+  id: number | null
+  doctorId: number | null
+  hospitalId: number | null
+}
+
 export type DoctorHospitalMinAggregateOutputType = {
-  id: string | null
-  doctorId: string | null
-  hospitalId: string | null
+  id: number | null
+  doctorId: number | null
+  hospitalId: number | null
 }
 
 export type DoctorHospitalMaxAggregateOutputType = {
-  id: string | null
-  doctorId: string | null
-  hospitalId: string | null
+  id: number | null
+  doctorId: number | null
+  hospitalId: number | null
 }
 
 export type DoctorHospitalCountAggregateOutputType = {
@@ -43,6 +57,18 @@ export type DoctorHospitalCountAggregateOutputType = {
   _all: number
 }
 
+
+export type DoctorHospitalAvgAggregateInputType = {
+  id?: true
+  doctorId?: true
+  hospitalId?: true
+}
+
+export type DoctorHospitalSumAggregateInputType = {
+  id?: true
+  doctorId?: true
+  hospitalId?: true
+}
 
 export type DoctorHospitalMinAggregateInputType = {
   id?: true
@@ -101,6 +127,18 @@ export type DoctorHospitalAggregateArgs<ExtArgs extends runtime.Types.Extensions
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: DoctorHospitalAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: DoctorHospitalSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: DoctorHospitalMinAggregateInputType
@@ -131,15 +169,19 @@ export type DoctorHospitalGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   _count?: DoctorHospitalCountAggregateInputType | true
+  _avg?: DoctorHospitalAvgAggregateInputType
+  _sum?: DoctorHospitalSumAggregateInputType
   _min?: DoctorHospitalMinAggregateInputType
   _max?: DoctorHospitalMaxAggregateInputType
 }
 
 export type DoctorHospitalGroupByOutputType = {
-  id: string
-  doctorId: string
-  hospitalId: string
+  id: number
+  doctorId: number
+  hospitalId: number
   _count: DoctorHospitalCountAggregateOutputType | null
+  _avg: DoctorHospitalAvgAggregateOutputType | null
+  _sum: DoctorHospitalSumAggregateOutputType | null
   _min: DoctorHospitalMinAggregateOutputType | null
   _max: DoctorHospitalMaxAggregateOutputType | null
 }
@@ -163,9 +205,9 @@ export type DoctorHospitalWhereInput = {
   AND?: Prisma.DoctorHospitalWhereInput | Prisma.DoctorHospitalWhereInput[]
   OR?: Prisma.DoctorHospitalWhereInput[]
   NOT?: Prisma.DoctorHospitalWhereInput | Prisma.DoctorHospitalWhereInput[]
-  id?: Prisma.StringFilter<"DoctorHospital"> | string
-  doctorId?: Prisma.StringFilter<"DoctorHospital"> | string
-  hospitalId?: Prisma.StringFilter<"DoctorHospital"> | string
+  id?: Prisma.IntFilter<"DoctorHospital"> | number
+  doctorId?: Prisma.IntFilter<"DoctorHospital"> | number
+  hospitalId?: Prisma.IntFilter<"DoctorHospital"> | number
   doctor?: Prisma.XOR<Prisma.DoctorProfileScalarRelationFilter, Prisma.DoctorProfileWhereInput>
   hospital?: Prisma.XOR<Prisma.HospitalScalarRelationFilter, Prisma.HospitalWhereInput>
 }
@@ -179,13 +221,13 @@ export type DoctorHospitalOrderByWithRelationInput = {
 }
 
 export type DoctorHospitalWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   doctorId_hospitalId?: Prisma.DoctorHospitalDoctorIdHospitalIdCompoundUniqueInput
   AND?: Prisma.DoctorHospitalWhereInput | Prisma.DoctorHospitalWhereInput[]
   OR?: Prisma.DoctorHospitalWhereInput[]
   NOT?: Prisma.DoctorHospitalWhereInput | Prisma.DoctorHospitalWhereInput[]
-  doctorId?: Prisma.StringFilter<"DoctorHospital"> | string
-  hospitalId?: Prisma.StringFilter<"DoctorHospital"> | string
+  doctorId?: Prisma.IntFilter<"DoctorHospital"> | number
+  hospitalId?: Prisma.IntFilter<"DoctorHospital"> | number
   doctor?: Prisma.XOR<Prisma.DoctorProfileScalarRelationFilter, Prisma.DoctorProfileWhereInput>
   hospital?: Prisma.XOR<Prisma.HospitalScalarRelationFilter, Prisma.HospitalWhereInput>
 }, "id" | "doctorId_hospitalId">
@@ -195,57 +237,57 @@ export type DoctorHospitalOrderByWithAggregationInput = {
   doctorId?: Prisma.SortOrder
   hospitalId?: Prisma.SortOrder
   _count?: Prisma.DoctorHospitalCountOrderByAggregateInput
+  _avg?: Prisma.DoctorHospitalAvgOrderByAggregateInput
   _max?: Prisma.DoctorHospitalMaxOrderByAggregateInput
   _min?: Prisma.DoctorHospitalMinOrderByAggregateInput
+  _sum?: Prisma.DoctorHospitalSumOrderByAggregateInput
 }
 
 export type DoctorHospitalScalarWhereWithAggregatesInput = {
   AND?: Prisma.DoctorHospitalScalarWhereWithAggregatesInput | Prisma.DoctorHospitalScalarWhereWithAggregatesInput[]
   OR?: Prisma.DoctorHospitalScalarWhereWithAggregatesInput[]
   NOT?: Prisma.DoctorHospitalScalarWhereWithAggregatesInput | Prisma.DoctorHospitalScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"DoctorHospital"> | string
-  doctorId?: Prisma.StringWithAggregatesFilter<"DoctorHospital"> | string
-  hospitalId?: Prisma.StringWithAggregatesFilter<"DoctorHospital"> | string
+  id?: Prisma.IntWithAggregatesFilter<"DoctorHospital"> | number
+  doctorId?: Prisma.IntWithAggregatesFilter<"DoctorHospital"> | number
+  hospitalId?: Prisma.IntWithAggregatesFilter<"DoctorHospital"> | number
 }
 
 export type DoctorHospitalCreateInput = {
-  id?: string
   doctor: Prisma.DoctorProfileCreateNestedOneWithoutHospitalsInput
   hospital: Prisma.HospitalCreateNestedOneWithoutDoctorsInput
 }
 
 export type DoctorHospitalUncheckedCreateInput = {
-  id?: string
-  doctorId: string
-  hospitalId: string
+  id?: number
+  doctorId: number
+  hospitalId: number
 }
 
 export type DoctorHospitalUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   doctor?: Prisma.DoctorProfileUpdateOneRequiredWithoutHospitalsNestedInput
   hospital?: Prisma.HospitalUpdateOneRequiredWithoutDoctorsNestedInput
 }
 
 export type DoctorHospitalUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
-  hospitalId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  doctorId?: Prisma.IntFieldUpdateOperationsInput | number
+  hospitalId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DoctorHospitalCreateManyInput = {
-  id?: string
-  doctorId: string
-  hospitalId: string
+  id?: number
+  doctorId: number
+  hospitalId: number
 }
 
 export type DoctorHospitalUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+
 }
 
 export type DoctorHospitalUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
-  hospitalId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  doctorId?: Prisma.IntFieldUpdateOperationsInput | number
+  hospitalId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DoctorHospitalListRelationFilter = {
@@ -259,11 +301,17 @@ export type DoctorHospitalOrderByRelationAggregateInput = {
 }
 
 export type DoctorHospitalDoctorIdHospitalIdCompoundUniqueInput = {
-  doctorId: string
-  hospitalId: string
+  doctorId: number
+  hospitalId: number
 }
 
 export type DoctorHospitalCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  doctorId?: Prisma.SortOrder
+  hospitalId?: Prisma.SortOrder
+}
+
+export type DoctorHospitalAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   doctorId?: Prisma.SortOrder
   hospitalId?: Prisma.SortOrder
@@ -276,6 +324,12 @@ export type DoctorHospitalMaxOrderByAggregateInput = {
 }
 
 export type DoctorHospitalMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  doctorId?: Prisma.SortOrder
+  hospitalId?: Prisma.SortOrder
+}
+
+export type DoctorHospitalSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   doctorId?: Prisma.SortOrder
   hospitalId?: Prisma.SortOrder
@@ -366,13 +420,12 @@ export type DoctorHospitalUncheckedUpdateManyWithoutHospitalNestedInput = {
 }
 
 export type DoctorHospitalCreateWithoutDoctorInput = {
-  id?: string
   hospital: Prisma.HospitalCreateNestedOneWithoutDoctorsInput
 }
 
 export type DoctorHospitalUncheckedCreateWithoutDoctorInput = {
-  id?: string
-  hospitalId: string
+  id?: number
+  hospitalId: number
 }
 
 export type DoctorHospitalCreateOrConnectWithoutDoctorInput = {
@@ -405,19 +458,18 @@ export type DoctorHospitalScalarWhereInput = {
   AND?: Prisma.DoctorHospitalScalarWhereInput | Prisma.DoctorHospitalScalarWhereInput[]
   OR?: Prisma.DoctorHospitalScalarWhereInput[]
   NOT?: Prisma.DoctorHospitalScalarWhereInput | Prisma.DoctorHospitalScalarWhereInput[]
-  id?: Prisma.StringFilter<"DoctorHospital"> | string
-  doctorId?: Prisma.StringFilter<"DoctorHospital"> | string
-  hospitalId?: Prisma.StringFilter<"DoctorHospital"> | string
+  id?: Prisma.IntFilter<"DoctorHospital"> | number
+  doctorId?: Prisma.IntFilter<"DoctorHospital"> | number
+  hospitalId?: Prisma.IntFilter<"DoctorHospital"> | number
 }
 
 export type DoctorHospitalCreateWithoutHospitalInput = {
-  id?: string
   doctor: Prisma.DoctorProfileCreateNestedOneWithoutHospitalsInput
 }
 
 export type DoctorHospitalUncheckedCreateWithoutHospitalInput = {
-  id?: string
-  doctorId: string
+  id?: number
+  doctorId: number
 }
 
 export type DoctorHospitalCreateOrConnectWithoutHospitalInput = {
@@ -447,43 +499,41 @@ export type DoctorHospitalUpdateManyWithWhereWithoutHospitalInput = {
 }
 
 export type DoctorHospitalCreateManyDoctorInput = {
-  id?: string
-  hospitalId: string
+  id?: number
+  hospitalId: number
 }
 
 export type DoctorHospitalUpdateWithoutDoctorInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   hospital?: Prisma.HospitalUpdateOneRequiredWithoutDoctorsNestedInput
 }
 
 export type DoctorHospitalUncheckedUpdateWithoutDoctorInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  hospitalId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  hospitalId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DoctorHospitalUncheckedUpdateManyWithoutDoctorInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  hospitalId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  hospitalId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DoctorHospitalCreateManyHospitalInput = {
-  id?: string
-  doctorId: string
+  id?: number
+  doctorId: number
 }
 
 export type DoctorHospitalUpdateWithoutHospitalInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   doctor?: Prisma.DoctorProfileUpdateOneRequiredWithoutHospitalsNestedInput
 }
 
 export type DoctorHospitalUncheckedUpdateWithoutHospitalInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  doctorId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type DoctorHospitalUncheckedUpdateManyWithoutHospitalInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  doctorId?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 
@@ -539,9 +589,9 @@ export type $DoctorHospitalPayload<ExtArgs extends runtime.Types.Extensions.Inte
     hospital: Prisma.$HospitalPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    doctorId: string
-    hospitalId: string
+    id: number
+    doctorId: number
+    hospitalId: number
   }, ExtArgs["result"]["doctorHospital"]>
   composites: {}
 }
@@ -967,9 +1017,9 @@ export interface Prisma__DoctorHospitalClient<T, Null = never, ExtArgs extends r
  * Fields of the DoctorHospital model
  */
 export interface DoctorHospitalFieldRefs {
-  readonly id: Prisma.FieldRef<"DoctorHospital", 'String'>
-  readonly doctorId: Prisma.FieldRef<"DoctorHospital", 'String'>
-  readonly hospitalId: Prisma.FieldRef<"DoctorHospital", 'String'>
+  readonly id: Prisma.FieldRef<"DoctorHospital", 'Int'>
+  readonly doctorId: Prisma.FieldRef<"DoctorHospital", 'Int'>
+  readonly hospitalId: Prisma.FieldRef<"DoctorHospital", 'Int'>
 }
     
 

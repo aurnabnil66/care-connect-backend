@@ -27,16 +27,20 @@ export type AggregateOtpVerification = {
 }
 
 export type OtpVerificationAvgAggregateOutputType = {
+  id: number | null
+  userId: number | null
   attempts: number | null
 }
 
 export type OtpVerificationSumAggregateOutputType = {
+  id: number | null
+  userId: number | null
   attempts: number | null
 }
 
 export type OtpVerificationMinAggregateOutputType = {
-  id: string | null
-  userId: string | null
+  id: number | null
+  userId: number | null
   code: string | null
   type: $Enums.OtpType | null
   expiresAt: Date | null
@@ -46,8 +50,8 @@ export type OtpVerificationMinAggregateOutputType = {
 }
 
 export type OtpVerificationMaxAggregateOutputType = {
-  id: string | null
-  userId: string | null
+  id: number | null
+  userId: number | null
   code: string | null
   type: $Enums.OtpType | null
   expiresAt: Date | null
@@ -70,10 +74,14 @@ export type OtpVerificationCountAggregateOutputType = {
 
 
 export type OtpVerificationAvgAggregateInputType = {
+  id?: true
+  userId?: true
   attempts?: true
 }
 
 export type OtpVerificationSumAggregateInputType = {
+  id?: true
+  userId?: true
   attempts?: true
 }
 
@@ -198,8 +206,8 @@ export type OtpVerificationGroupByArgs<ExtArgs extends runtime.Types.Extensions.
 }
 
 export type OtpVerificationGroupByOutputType = {
-  id: string
-  userId: string
+  id: number
+  userId: number
   code: string
   type: $Enums.OtpType
   expiresAt: Date
@@ -232,8 +240,8 @@ export type OtpVerificationWhereInput = {
   AND?: Prisma.OtpVerificationWhereInput | Prisma.OtpVerificationWhereInput[]
   OR?: Prisma.OtpVerificationWhereInput[]
   NOT?: Prisma.OtpVerificationWhereInput | Prisma.OtpVerificationWhereInput[]
-  id?: Prisma.StringFilter<"OtpVerification"> | string
-  userId?: Prisma.StringFilter<"OtpVerification"> | string
+  id?: Prisma.IntFilter<"OtpVerification"> | number
+  userId?: Prisma.IntFilter<"OtpVerification"> | number
   code?: Prisma.StringFilter<"OtpVerification"> | string
   type?: Prisma.EnumOtpTypeFilter<"OtpVerification"> | $Enums.OtpType
   expiresAt?: Prisma.DateTimeFilter<"OtpVerification"> | Date | string
@@ -256,11 +264,11 @@ export type OtpVerificationOrderByWithRelationInput = {
 }
 
 export type OtpVerificationWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.OtpVerificationWhereInput | Prisma.OtpVerificationWhereInput[]
   OR?: Prisma.OtpVerificationWhereInput[]
   NOT?: Prisma.OtpVerificationWhereInput | Prisma.OtpVerificationWhereInput[]
-  userId?: Prisma.StringFilter<"OtpVerification"> | string
+  userId?: Prisma.IntFilter<"OtpVerification"> | number
   code?: Prisma.StringFilter<"OtpVerification"> | string
   type?: Prisma.EnumOtpTypeFilter<"OtpVerification"> | $Enums.OtpType
   expiresAt?: Prisma.DateTimeFilter<"OtpVerification"> | Date | string
@@ -290,8 +298,8 @@ export type OtpVerificationScalarWhereWithAggregatesInput = {
   AND?: Prisma.OtpVerificationScalarWhereWithAggregatesInput | Prisma.OtpVerificationScalarWhereWithAggregatesInput[]
   OR?: Prisma.OtpVerificationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.OtpVerificationScalarWhereWithAggregatesInput | Prisma.OtpVerificationScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"OtpVerification"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"OtpVerification"> | string
+  id?: Prisma.IntWithAggregatesFilter<"OtpVerification"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"OtpVerification"> | number
   code?: Prisma.StringWithAggregatesFilter<"OtpVerification"> | string
   type?: Prisma.EnumOtpTypeWithAggregatesFilter<"OtpVerification"> | $Enums.OtpType
   expiresAt?: Prisma.DateTimeWithAggregatesFilter<"OtpVerification"> | Date | string
@@ -301,7 +309,6 @@ export type OtpVerificationScalarWhereWithAggregatesInput = {
 }
 
 export type OtpVerificationCreateInput = {
-  id?: string
   code: string
   type: $Enums.OtpType
   expiresAt: Date | string
@@ -312,8 +319,8 @@ export type OtpVerificationCreateInput = {
 }
 
 export type OtpVerificationUncheckedCreateInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   code: string
   type: $Enums.OtpType
   expiresAt: Date | string
@@ -323,7 +330,6 @@ export type OtpVerificationUncheckedCreateInput = {
 }
 
 export type OtpVerificationUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumOtpTypeFieldUpdateOperationsInput | $Enums.OtpType
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -334,8 +340,8 @@ export type OtpVerificationUpdateInput = {
 }
 
 export type OtpVerificationUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   code?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumOtpTypeFieldUpdateOperationsInput | $Enums.OtpType
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -345,8 +351,8 @@ export type OtpVerificationUncheckedUpdateInput = {
 }
 
 export type OtpVerificationCreateManyInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
   code: string
   type: $Enums.OtpType
   expiresAt: Date | string
@@ -356,7 +362,6 @@ export type OtpVerificationCreateManyInput = {
 }
 
 export type OtpVerificationUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumOtpTypeFieldUpdateOperationsInput | $Enums.OtpType
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -366,8 +371,8 @@ export type OtpVerificationUpdateManyMutationInput = {
 }
 
 export type OtpVerificationUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
   code?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumOtpTypeFieldUpdateOperationsInput | $Enums.OtpType
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -398,6 +403,8 @@ export type OtpVerificationCountOrderByAggregateInput = {
 }
 
 export type OtpVerificationAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   attempts?: Prisma.SortOrder
 }
 
@@ -424,6 +431,8 @@ export type OtpVerificationMinOrderByAggregateInput = {
 }
 
 export type OtpVerificationSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   attempts?: Prisma.SortOrder
 }
 
@@ -473,16 +482,7 @@ export type EnumOtpTypeFieldUpdateOperationsInput = {
   set?: $Enums.OtpType
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type OtpVerificationCreateWithoutUserInput = {
-  id?: string
   code: string
   type: $Enums.OtpType
   expiresAt: Date | string
@@ -492,7 +492,7 @@ export type OtpVerificationCreateWithoutUserInput = {
 }
 
 export type OtpVerificationUncheckedCreateWithoutUserInput = {
-  id?: string
+  id?: number
   code: string
   type: $Enums.OtpType
   expiresAt: Date | string
@@ -531,8 +531,8 @@ export type OtpVerificationScalarWhereInput = {
   AND?: Prisma.OtpVerificationScalarWhereInput | Prisma.OtpVerificationScalarWhereInput[]
   OR?: Prisma.OtpVerificationScalarWhereInput[]
   NOT?: Prisma.OtpVerificationScalarWhereInput | Prisma.OtpVerificationScalarWhereInput[]
-  id?: Prisma.StringFilter<"OtpVerification"> | string
-  userId?: Prisma.StringFilter<"OtpVerification"> | string
+  id?: Prisma.IntFilter<"OtpVerification"> | number
+  userId?: Prisma.IntFilter<"OtpVerification"> | number
   code?: Prisma.StringFilter<"OtpVerification"> | string
   type?: Prisma.EnumOtpTypeFilter<"OtpVerification"> | $Enums.OtpType
   expiresAt?: Prisma.DateTimeFilter<"OtpVerification"> | Date | string
@@ -542,7 +542,7 @@ export type OtpVerificationScalarWhereInput = {
 }
 
 export type OtpVerificationCreateManyUserInput = {
-  id?: string
+  id?: number
   code: string
   type: $Enums.OtpType
   expiresAt: Date | string
@@ -552,7 +552,6 @@ export type OtpVerificationCreateManyUserInput = {
 }
 
 export type OtpVerificationUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   code?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumOtpTypeFieldUpdateOperationsInput | $Enums.OtpType
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -562,7 +561,7 @@ export type OtpVerificationUpdateWithoutUserInput = {
 }
 
 export type OtpVerificationUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   code?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumOtpTypeFieldUpdateOperationsInput | $Enums.OtpType
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -572,7 +571,7 @@ export type OtpVerificationUncheckedUpdateWithoutUserInput = {
 }
 
 export type OtpVerificationUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   code?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumOtpTypeFieldUpdateOperationsInput | $Enums.OtpType
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -647,8 +646,8 @@ export type $OtpVerificationPayload<ExtArgs extends runtime.Types.Extensions.Int
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    userId: string
+    id: number
+    userId: number
     code: string
     type: $Enums.OtpType
     expiresAt: Date
@@ -1079,8 +1078,8 @@ export interface Prisma__OtpVerificationClient<T, Null = never, ExtArgs extends 
  * Fields of the OtpVerification model
  */
 export interface OtpVerificationFieldRefs {
-  readonly id: Prisma.FieldRef<"OtpVerification", 'String'>
-  readonly userId: Prisma.FieldRef<"OtpVerification", 'String'>
+  readonly id: Prisma.FieldRef<"OtpVerification", 'Int'>
+  readonly userId: Prisma.FieldRef<"OtpVerification", 'Int'>
   readonly code: Prisma.FieldRef<"OtpVerification", 'String'>
   readonly type: Prisma.FieldRef<"OtpVerification", 'OtpType'>
   readonly expiresAt: Prisma.FieldRef<"OtpVerification", 'DateTime'>

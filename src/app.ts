@@ -2,13 +2,11 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import http from "http";
-
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@as-integrations/express5";
-
-import { typeDefs } from "@/graphql/schema";
-import { resolvers } from "@/graphql/resolver";
 import { createContext } from "@/graphql/context";
+import { authTypeDefs } from "./modules/auth/auth.schema";
+import { authResolvers } from "./modules/auth/auth.resolver";
 
 dotenv.config();
 
@@ -18,8 +16,8 @@ export const httpServer = http.createServer(app);
 
 // Create Apollo Server
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  typeDefs: [authTypeDefs],
+  resolvers: [authResolvers],
 });
 
 async function startServer() {

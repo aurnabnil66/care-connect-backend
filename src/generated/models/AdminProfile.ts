@@ -20,40 +20,80 @@ export type AdminProfileModel = runtime.Types.Result.DefaultSelection<Prisma.$Ad
 
 export type AggregateAdminProfile = {
   _count: AdminProfileCountAggregateOutputType | null
+  _avg: AdminProfileAvgAggregateOutputType | null
+  _sum: AdminProfileSumAggregateOutputType | null
   _min: AdminProfileMinAggregateOutputType | null
   _max: AdminProfileMaxAggregateOutputType | null
 }
 
+export type AdminProfileAvgAggregateOutputType = {
+  id: number | null
+  userId: number | null
+}
+
+export type AdminProfileSumAggregateOutputType = {
+  id: number | null
+  userId: number | null
+}
+
 export type AdminProfileMinAggregateOutputType = {
-  id: string | null
-  userId: string | null
+  id: number | null
+  userId: number | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
 }
 
 export type AdminProfileMaxAggregateOutputType = {
-  id: string | null
-  userId: string | null
+  id: number | null
+  userId: number | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
 }
 
 export type AdminProfileCountAggregateOutputType = {
   id: number
   userId: number
+  createdAt: number
+  updatedAt: number
+  deletedAt: number
   _all: number
 }
 
 
+export type AdminProfileAvgAggregateInputType = {
+  id?: true
+  userId?: true
+}
+
+export type AdminProfileSumAggregateInputType = {
+  id?: true
+  userId?: true
+}
+
 export type AdminProfileMinAggregateInputType = {
   id?: true
   userId?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
 }
 
 export type AdminProfileMaxAggregateInputType = {
   id?: true
   userId?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
 }
 
 export type AdminProfileCountAggregateInputType = {
   id?: true
   userId?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -95,6 +135,18 @@ export type AdminProfileAggregateArgs<ExtArgs extends runtime.Types.Extensions.I
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: AdminProfileAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: AdminProfileSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: AdminProfileMinAggregateInputType
@@ -125,14 +177,21 @@ export type AdminProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   _count?: AdminProfileCountAggregateInputType | true
+  _avg?: AdminProfileAvgAggregateInputType
+  _sum?: AdminProfileSumAggregateInputType
   _min?: AdminProfileMinAggregateInputType
   _max?: AdminProfileMaxAggregateInputType
 }
 
 export type AdminProfileGroupByOutputType = {
-  id: string
-  userId: string
+  id: number
+  userId: number
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date | null
   _count: AdminProfileCountAggregateOutputType | null
+  _avg: AdminProfileAvgAggregateOutputType | null
+  _sum: AdminProfileSumAggregateOutputType | null
   _min: AdminProfileMinAggregateOutputType | null
   _max: AdminProfileMaxAggregateOutputType | null
 }
@@ -156,74 +215,109 @@ export type AdminProfileWhereInput = {
   AND?: Prisma.AdminProfileWhereInput | Prisma.AdminProfileWhereInput[]
   OR?: Prisma.AdminProfileWhereInput[]
   NOT?: Prisma.AdminProfileWhereInput | Prisma.AdminProfileWhereInput[]
-  id?: Prisma.StringFilter<"AdminProfile"> | string
-  userId?: Prisma.StringFilter<"AdminProfile"> | string
+  id?: Prisma.IntFilter<"AdminProfile"> | number
+  userId?: Prisma.IntFilter<"AdminProfile"> | number
+  createdAt?: Prisma.DateTimeFilter<"AdminProfile"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AdminProfile"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"AdminProfile"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type AdminProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type AdminProfileWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
-  userId?: string
+  id?: number
+  userId?: number
   AND?: Prisma.AdminProfileWhereInput | Prisma.AdminProfileWhereInput[]
   OR?: Prisma.AdminProfileWhereInput[]
   NOT?: Prisma.AdminProfileWhereInput | Prisma.AdminProfileWhereInput[]
+  createdAt?: Prisma.DateTimeFilter<"AdminProfile"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"AdminProfile"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"AdminProfile"> | Date | string | null
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "userId">
 
 export type AdminProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AdminProfileCountOrderByAggregateInput
+  _avg?: Prisma.AdminProfileAvgOrderByAggregateInput
   _max?: Prisma.AdminProfileMaxOrderByAggregateInput
   _min?: Prisma.AdminProfileMinOrderByAggregateInput
+  _sum?: Prisma.AdminProfileSumOrderByAggregateInput
 }
 
 export type AdminProfileScalarWhereWithAggregatesInput = {
   AND?: Prisma.AdminProfileScalarWhereWithAggregatesInput | Prisma.AdminProfileScalarWhereWithAggregatesInput[]
   OR?: Prisma.AdminProfileScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AdminProfileScalarWhereWithAggregatesInput | Prisma.AdminProfileScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"AdminProfile"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"AdminProfile"> | string
+  id?: Prisma.IntWithAggregatesFilter<"AdminProfile"> | number
+  userId?: Prisma.IntWithAggregatesFilter<"AdminProfile"> | number
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"AdminProfile"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AdminProfile"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AdminProfile"> | Date | string | null
 }
 
 export type AdminProfileCreateInput = {
-  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   user: Prisma.UserCreateNestedOneWithoutAdminProfileInput
 }
 
 export type AdminProfileUncheckedCreateInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type AdminProfileUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   user?: Prisma.UserUpdateOneRequiredWithoutAdminProfileNestedInput
 }
 
 export type AdminProfileUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AdminProfileCreateManyInput = {
-  id?: string
-  userId: string
+  id?: number
+  userId: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type AdminProfileUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AdminProfileUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AdminProfileNullableScalarRelationFilter = {
@@ -234,14 +328,33 @@ export type AdminProfileNullableScalarRelationFilter = {
 export type AdminProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+}
+
+export type AdminProfileAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
 }
 
 export type AdminProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type AdminProfileMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+}
+
+export type AdminProfileSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
 }
@@ -279,11 +392,16 @@ export type AdminProfileUncheckedUpdateOneWithoutUserNestedInput = {
 }
 
 export type AdminProfileCreateWithoutUserInput = {
-  id?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type AdminProfileUncheckedCreateWithoutUserInput = {
-  id?: string
+  id?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type AdminProfileCreateOrConnectWithoutUserInput = {
@@ -303,11 +421,16 @@ export type AdminProfileUpdateToOneWithWhereWithoutUserInput = {
 }
 
 export type AdminProfileUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AdminProfileUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -315,27 +438,39 @@ export type AdminProfileUncheckedUpdateWithoutUserInput = {
 export type AdminProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["adminProfile"]>
 
 export type AdminProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["adminProfile"]>
 
 export type AdminProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["adminProfile"]>
 
 export type AdminProfileSelectScalar = {
   id?: boolean
   userId?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
 }
 
-export type AdminProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId", ExtArgs["result"]["adminProfile"]>
+export type AdminProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["adminProfile"]>
 export type AdminProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -352,8 +487,11 @@ export type $AdminProfilePayload<ExtArgs extends runtime.Types.Extensions.Intern
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    userId: string
+    id: number
+    userId: number
+    createdAt: Date
+    updatedAt: Date
+    deletedAt: Date | null
   }, ExtArgs["result"]["adminProfile"]>
   composites: {}
 }
@@ -778,8 +916,11 @@ export interface Prisma__AdminProfileClient<T, Null = never, ExtArgs extends run
  * Fields of the AdminProfile model
  */
 export interface AdminProfileFieldRefs {
-  readonly id: Prisma.FieldRef<"AdminProfile", 'String'>
-  readonly userId: Prisma.FieldRef<"AdminProfile", 'String'>
+  readonly id: Prisma.FieldRef<"AdminProfile", 'Int'>
+  readonly userId: Prisma.FieldRef<"AdminProfile", 'Int'>
+  readonly createdAt: Prisma.FieldRef<"AdminProfile", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"AdminProfile", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"AdminProfile", 'DateTime'>
 }
     
 

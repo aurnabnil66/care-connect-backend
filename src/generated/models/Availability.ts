@@ -20,24 +20,42 @@ export type AvailabilityModel = runtime.Types.Result.DefaultSelection<Prisma.$Av
 
 export type AggregateAvailability = {
   _count: AvailabilityCountAggregateOutputType | null
+  _avg: AvailabilityAvgAggregateOutputType | null
+  _sum: AvailabilitySumAggregateOutputType | null
   _min: AvailabilityMinAggregateOutputType | null
   _max: AvailabilityMaxAggregateOutputType | null
 }
 
+export type AvailabilityAvgAggregateOutputType = {
+  id: number | null
+  doctorId: number | null
+}
+
+export type AvailabilitySumAggregateOutputType = {
+  id: number | null
+  doctorId: number | null
+}
+
 export type AvailabilityMinAggregateOutputType = {
-  id: string | null
-  doctorId: string | null
+  id: number | null
+  doctorId: number | null
   date: Date | null
   startTime: string | null
   endTime: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
 }
 
 export type AvailabilityMaxAggregateOutputType = {
-  id: string | null
-  doctorId: string | null
+  id: number | null
+  doctorId: number | null
   date: Date | null
   startTime: string | null
   endTime: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
+  deletedAt: Date | null
 }
 
 export type AvailabilityCountAggregateOutputType = {
@@ -46,9 +64,22 @@ export type AvailabilityCountAggregateOutputType = {
   date: number
   startTime: number
   endTime: number
+  createdAt: number
+  updatedAt: number
+  deletedAt: number
   _all: number
 }
 
+
+export type AvailabilityAvgAggregateInputType = {
+  id?: true
+  doctorId?: true
+}
+
+export type AvailabilitySumAggregateInputType = {
+  id?: true
+  doctorId?: true
+}
 
 export type AvailabilityMinAggregateInputType = {
   id?: true
@@ -56,6 +87,9 @@ export type AvailabilityMinAggregateInputType = {
   date?: true
   startTime?: true
   endTime?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
 }
 
 export type AvailabilityMaxAggregateInputType = {
@@ -64,6 +98,9 @@ export type AvailabilityMaxAggregateInputType = {
   date?: true
   startTime?: true
   endTime?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
 }
 
 export type AvailabilityCountAggregateInputType = {
@@ -72,6 +109,9 @@ export type AvailabilityCountAggregateInputType = {
   date?: true
   startTime?: true
   endTime?: true
+  createdAt?: true
+  updatedAt?: true
+  deletedAt?: true
   _all?: true
 }
 
@@ -113,6 +153,18 @@ export type AvailabilityAggregateArgs<ExtArgs extends runtime.Types.Extensions.I
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: AvailabilityAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: AvailabilitySumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: AvailabilityMinAggregateInputType
@@ -143,17 +195,24 @@ export type AvailabilityGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
   take?: number
   skip?: number
   _count?: AvailabilityCountAggregateInputType | true
+  _avg?: AvailabilityAvgAggregateInputType
+  _sum?: AvailabilitySumAggregateInputType
   _min?: AvailabilityMinAggregateInputType
   _max?: AvailabilityMaxAggregateInputType
 }
 
 export type AvailabilityGroupByOutputType = {
-  id: string
-  doctorId: string
+  id: number
+  doctorId: number
   date: Date
   startTime: string
   endTime: string
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date | null
   _count: AvailabilityCountAggregateOutputType | null
+  _avg: AvailabilityAvgAggregateOutputType | null
+  _sum: AvailabilitySumAggregateOutputType | null
   _min: AvailabilityMinAggregateOutputType | null
   _max: AvailabilityMaxAggregateOutputType | null
 }
@@ -177,11 +236,14 @@ export type AvailabilityWhereInput = {
   AND?: Prisma.AvailabilityWhereInput | Prisma.AvailabilityWhereInput[]
   OR?: Prisma.AvailabilityWhereInput[]
   NOT?: Prisma.AvailabilityWhereInput | Prisma.AvailabilityWhereInput[]
-  id?: Prisma.StringFilter<"Availability"> | string
-  doctorId?: Prisma.StringFilter<"Availability"> | string
+  id?: Prisma.IntFilter<"Availability"> | number
+  doctorId?: Prisma.IntFilter<"Availability"> | number
   date?: Prisma.DateTimeFilter<"Availability"> | Date | string
   startTime?: Prisma.StringFilter<"Availability"> | string
   endTime?: Prisma.StringFilter<"Availability"> | string
+  createdAt?: Prisma.DateTimeFilter<"Availability"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Availability"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Availability"> | Date | string | null
   doctor?: Prisma.XOR<Prisma.DoctorProfileScalarRelationFilter, Prisma.DoctorProfileWhereInput>
 }
 
@@ -191,18 +253,24 @@ export type AvailabilityOrderByWithRelationInput = {
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   doctor?: Prisma.DoctorProfileOrderByWithRelationInput
 }
 
 export type AvailabilityWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.AvailabilityWhereInput | Prisma.AvailabilityWhereInput[]
   OR?: Prisma.AvailabilityWhereInput[]
   NOT?: Prisma.AvailabilityWhereInput | Prisma.AvailabilityWhereInput[]
-  doctorId?: Prisma.StringFilter<"Availability"> | string
+  doctorId?: Prisma.IntFilter<"Availability"> | number
   date?: Prisma.DateTimeFilter<"Availability"> | Date | string
   startTime?: Prisma.StringFilter<"Availability"> | string
   endTime?: Prisma.StringFilter<"Availability"> | string
+  createdAt?: Prisma.DateTimeFilter<"Availability"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Availability"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Availability"> | Date | string | null
   doctor?: Prisma.XOR<Prisma.DoctorProfileScalarRelationFilter, Prisma.DoctorProfileWhereInput>
 }, "id">
 
@@ -212,75 +280,101 @@ export type AvailabilityOrderByWithAggregationInput = {
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.AvailabilityCountOrderByAggregateInput
+  _avg?: Prisma.AvailabilityAvgOrderByAggregateInput
   _max?: Prisma.AvailabilityMaxOrderByAggregateInput
   _min?: Prisma.AvailabilityMinOrderByAggregateInput
+  _sum?: Prisma.AvailabilitySumOrderByAggregateInput
 }
 
 export type AvailabilityScalarWhereWithAggregatesInput = {
   AND?: Prisma.AvailabilityScalarWhereWithAggregatesInput | Prisma.AvailabilityScalarWhereWithAggregatesInput[]
   OR?: Prisma.AvailabilityScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AvailabilityScalarWhereWithAggregatesInput | Prisma.AvailabilityScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"Availability"> | string
-  doctorId?: Prisma.StringWithAggregatesFilter<"Availability"> | string
+  id?: Prisma.IntWithAggregatesFilter<"Availability"> | number
+  doctorId?: Prisma.IntWithAggregatesFilter<"Availability"> | number
   date?: Prisma.DateTimeWithAggregatesFilter<"Availability"> | Date | string
   startTime?: Prisma.StringWithAggregatesFilter<"Availability"> | string
   endTime?: Prisma.StringWithAggregatesFilter<"Availability"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Availability"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Availability"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Availability"> | Date | string | null
 }
 
 export type AvailabilityCreateInput = {
-  id?: string
   date: Date | string
   startTime: string
   endTime: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
   doctor: Prisma.DoctorProfileCreateNestedOneWithoutAvailabilityInput
 }
 
 export type AvailabilityUncheckedCreateInput = {
-  id?: string
-  doctorId: string
+  id?: number
+  doctorId: number
   date: Date | string
   startTime: string
   endTime: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type AvailabilityUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   doctor?: Prisma.DoctorProfileUpdateOneRequiredWithoutAvailabilityNestedInput
 }
 
 export type AvailabilityUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  doctorId?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AvailabilityCreateManyInput = {
-  id?: string
-  doctorId: string
+  id?: number
+  doctorId: number
   date: Date | string
   startTime: string
   endTime: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type AvailabilityUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AvailabilityUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  doctorId?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  doctorId?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AvailabilityListRelationFilter = {
@@ -299,6 +393,14 @@ export type AvailabilityCountOrderByAggregateInput = {
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+}
+
+export type AvailabilityAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  doctorId?: Prisma.SortOrder
 }
 
 export type AvailabilityMaxOrderByAggregateInput = {
@@ -307,6 +409,9 @@ export type AvailabilityMaxOrderByAggregateInput = {
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
 }
 
 export type AvailabilityMinOrderByAggregateInput = {
@@ -315,6 +420,14 @@ export type AvailabilityMinOrderByAggregateInput = {
   date?: Prisma.SortOrder
   startTime?: Prisma.SortOrder
   endTime?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  deletedAt?: Prisma.SortOrder
+}
+
+export type AvailabilitySumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  doctorId?: Prisma.SortOrder
 }
 
 export type AvailabilityCreateNestedManyWithoutDoctorInput = {
@@ -360,17 +473,22 @@ export type AvailabilityUncheckedUpdateManyWithoutDoctorNestedInput = {
 }
 
 export type AvailabilityCreateWithoutDoctorInput = {
-  id?: string
   date: Date | string
   startTime: string
   endTime: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type AvailabilityUncheckedCreateWithoutDoctorInput = {
-  id?: string
+  id?: number
   date: Date | string
   startTime: string
   endTime: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type AvailabilityCreateOrConnectWithoutDoctorInput = {
@@ -403,39 +521,53 @@ export type AvailabilityScalarWhereInput = {
   AND?: Prisma.AvailabilityScalarWhereInput | Prisma.AvailabilityScalarWhereInput[]
   OR?: Prisma.AvailabilityScalarWhereInput[]
   NOT?: Prisma.AvailabilityScalarWhereInput | Prisma.AvailabilityScalarWhereInput[]
-  id?: Prisma.StringFilter<"Availability"> | string
-  doctorId?: Prisma.StringFilter<"Availability"> | string
+  id?: Prisma.IntFilter<"Availability"> | number
+  doctorId?: Prisma.IntFilter<"Availability"> | number
   date?: Prisma.DateTimeFilter<"Availability"> | Date | string
   startTime?: Prisma.StringFilter<"Availability"> | string
   endTime?: Prisma.StringFilter<"Availability"> | string
+  createdAt?: Prisma.DateTimeFilter<"Availability"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Availability"> | Date | string
+  deletedAt?: Prisma.DateTimeNullableFilter<"Availability"> | Date | string | null
 }
 
 export type AvailabilityCreateManyDoctorInput = {
-  id?: string
+  id?: number
   date: Date | string
   startTime: string
   endTime: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
 }
 
 export type AvailabilityUpdateWithoutDoctorInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AvailabilityUncheckedUpdateWithoutDoctorInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 export type AvailabilityUncheckedUpdateManyWithoutDoctorInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   startTime?: Prisma.StringFieldUpdateOperationsInput | string
   endTime?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
 }
 
 
@@ -446,6 +578,9 @@ export type AvailabilitySelect<ExtArgs extends runtime.Types.Extensions.Internal
   date?: boolean
   startTime?: boolean
   endTime?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   doctor?: boolean | Prisma.DoctorProfileDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["availability"]>
 
@@ -455,6 +590,9 @@ export type AvailabilitySelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   date?: boolean
   startTime?: boolean
   endTime?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   doctor?: boolean | Prisma.DoctorProfileDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["availability"]>
 
@@ -464,6 +602,9 @@ export type AvailabilitySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   date?: boolean
   startTime?: boolean
   endTime?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
   doctor?: boolean | Prisma.DoctorProfileDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["availability"]>
 
@@ -473,9 +614,12 @@ export type AvailabilitySelectScalar = {
   date?: boolean
   startTime?: boolean
   endTime?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
+  deletedAt?: boolean
 }
 
-export type AvailabilityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "doctorId" | "date" | "startTime" | "endTime", ExtArgs["result"]["availability"]>
+export type AvailabilityOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "doctorId" | "date" | "startTime" | "endTime" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["availability"]>
 export type AvailabilityInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   doctor?: boolean | Prisma.DoctorProfileDefaultArgs<ExtArgs>
 }
@@ -492,11 +636,14 @@ export type $AvailabilityPayload<ExtArgs extends runtime.Types.Extensions.Intern
     doctor: Prisma.$DoctorProfilePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
-    doctorId: string
+    id: number
+    doctorId: number
     date: Date
     startTime: string
     endTime: string
+    createdAt: Date
+    updatedAt: Date
+    deletedAt: Date | null
   }, ExtArgs["result"]["availability"]>
   composites: {}
 }
@@ -921,11 +1068,14 @@ export interface Prisma__AvailabilityClient<T, Null = never, ExtArgs extends run
  * Fields of the Availability model
  */
 export interface AvailabilityFieldRefs {
-  readonly id: Prisma.FieldRef<"Availability", 'String'>
-  readonly doctorId: Prisma.FieldRef<"Availability", 'String'>
+  readonly id: Prisma.FieldRef<"Availability", 'Int'>
+  readonly doctorId: Prisma.FieldRef<"Availability", 'Int'>
   readonly date: Prisma.FieldRef<"Availability", 'DateTime'>
   readonly startTime: Prisma.FieldRef<"Availability", 'String'>
   readonly endTime: Prisma.FieldRef<"Availability", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Availability", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Availability", 'DateTime'>
+  readonly deletedAt: Prisma.FieldRef<"Availability", 'DateTime'>
 }
     
 
