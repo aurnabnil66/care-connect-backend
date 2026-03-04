@@ -3,6 +3,8 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { Role } from "@/generated/enums";
 
+console.log("DATABASE_URL:", process.env.DATABASE_URL);
+
 export const authService = {
   // Create admin
   async createAdmin(data: { email: string; password: string }) {
