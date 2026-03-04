@@ -13,20 +13,35 @@
  * 🟢 You can import this file directly.
  */
 
-import * as Prisma from './internal/prismaNamespaceBrowser.js'
+import * as Prisma from './internal/prismaNamespaceBrowser'
 export { Prisma }
-export * as $Enums from './enums.js'
-export * from './enums.js';
+export * as $Enums from './enums'
+export * from './enums';
 /**
  * Model User
  * 
  */
 export type User = Prisma.UserModel
 /**
- * Model Doctor
+ * Model AdminProfile
  * 
  */
-export type Doctor = Prisma.DoctorModel
+export type AdminProfile = Prisma.AdminProfileModel
+/**
+ * Model DoctorProfile
+ * 
+ */
+export type DoctorProfile = Prisma.DoctorProfileModel
+/**
+ * Model PatientProfile
+ * 
+ */
+export type PatientProfile = Prisma.PatientProfileModel
+/**
+ * Model HospitalManagerProfile
+ * 
+ */
+export type HospitalManagerProfile = Prisma.HospitalManagerProfileModel
 /**
  * Model Hospital
  * 
@@ -38,12 +53,22 @@ export type Hospital = Prisma.HospitalModel
  */
 export type DoctorHospital = Prisma.DoctorHospitalModel
 /**
+ * Model Availability
+ * 
+ */
+export type Availability = Prisma.AvailabilityModel
+/**
  * Model Appointment
  * 
  */
 export type Appointment = Prisma.AppointmentModel
 /**
- * Model AppointmentHistory
+ * Model Prescription
  * 
  */
-export type AppointmentHistory = Prisma.AppointmentHistoryModel
+export type Prescription = Prisma.PrescriptionModel
+/**
+ * Model OtpVerification
+ * 
+ */
+export type OtpVerification = Prisma.OtpVerificationModel

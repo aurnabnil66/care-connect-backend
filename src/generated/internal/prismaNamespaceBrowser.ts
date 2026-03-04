@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.js'
-export type * from './prismaNamespace.js'
+export type * from '../models'
+export type * from './prismaNamespace'
 
 export const Decimal = runtime.Decimal
 
@@ -52,11 +52,16 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Doctor: 'Doctor',
+  AdminProfile: 'AdminProfile',
+  DoctorProfile: 'DoctorProfile',
+  PatientProfile: 'PatientProfile',
+  HospitalManagerProfile: 'HospitalManagerProfile',
   Hospital: 'Hospital',
   DoctorHospital: 'DoctorHospital',
+  Availability: 'Availability',
   Appointment: 'Appointment',
-  AppointmentHistory: 'AppointmentHistory'
+  Prescription: 'Prescription',
+  OtpVerification: 'OtpVerification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -65,48 +70,93 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  * Enums
  */
 
-export const TransactionIsolationLevel = {
+export const TransactionIsolationLevel = runtime.makeStrictEnum({
   ReadUncommitted: 'ReadUncommitted',
   ReadCommitted: 'ReadCommitted',
   RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
-} as const
+} as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  name: 'name',
   email: 'email',
   password: 'password',
-  phone: 'phone',
+  googleId: 'googleId',
   role: 'role',
+  isVerified: 'isVerified',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const DoctorScalarFieldEnum = {
+export const AdminProfileScalarFieldEnum = {
   id: 'id',
-  specialization: 'specialization',
-  experience: 'experience',
+  userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  userId: 'userId'
+  deletedAt: 'deletedAt'
 } as const
 
-export type DoctorScalarFieldEnum = (typeof DoctorScalarFieldEnum)[keyof typeof DoctorScalarFieldEnum]
+export type AdminProfileScalarFieldEnum = (typeof AdminProfileScalarFieldEnum)[keyof typeof AdminProfileScalarFieldEnum]
+
+
+export const DoctorProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  doctorId: 'doctorId',
+  name: 'name',
+  phone: 'phone',
+  designation: 'designation',
+  specialization: 'specialization',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type DoctorProfileScalarFieldEnum = (typeof DoctorProfileScalarFieldEnum)[keyof typeof DoctorProfileScalarFieldEnum]
+
+
+export const PatientProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  patientId: 'patientId',
+  name: 'name',
+  phone: 'phone',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type PatientProfileScalarFieldEnum = (typeof PatientProfileScalarFieldEnum)[keyof typeof PatientProfileScalarFieldEnum]
+
+
+export const HospitalManagerProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  employeeId: 'employeeId',
+  hospitalId: 'hospitalId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type HospitalManagerProfileScalarFieldEnum = (typeof HospitalManagerProfileScalarFieldEnum)[keyof typeof HospitalManagerProfileScalarFieldEnum]
 
 
 export const HospitalScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  location: 'location',
+  address: 'address',
+  city: 'city',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 } as const
 
 export type HospitalScalarFieldEnum = (typeof HospitalScalarFieldEnum)[keyof typeof HospitalScalarFieldEnum]
@@ -115,41 +165,68 @@ export type HospitalScalarFieldEnum = (typeof HospitalScalarFieldEnum)[keyof typ
 export const DoctorHospitalScalarFieldEnum = {
   id: 'id',
   doctorId: 'doctorId',
-  hospitalId: 'hospitalId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  hospitalId: 'hospitalId'
 } as const
 
 export type DoctorHospitalScalarFieldEnum = (typeof DoctorHospitalScalarFieldEnum)[keyof typeof DoctorHospitalScalarFieldEnum]
 
 
-export const AppointmentScalarFieldEnum = {
+export const AvailabilityScalarFieldEnum = {
   id: 'id',
+  doctorId: 'doctorId',
   date: 'date',
-  status: 'status',
+  startTime: 'startTime',
+  endTime: 'endTime',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type AvailabilityScalarFieldEnum = (typeof AvailabilityScalarFieldEnum)[keyof typeof AvailabilityScalarFieldEnum]
+
+
+export const AppointmentScalarFieldEnum = {
+  id: 'id',
   patientId: 'patientId',
   doctorId: 'doctorId',
   hospitalId: 'hospitalId',
-  doctorHospitalId: 'doctorHospitalId'
+  date: 'date',
+  time: 'time',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
 } as const
 
 export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
 
 
-export const AppointmentHistoryScalarFieldEnum = {
+export const PrescriptionScalarFieldEnum = {
   id: 'id',
   appointmentId: 'appointmentId',
+  patientId: 'patientId',
+  doctorId: 'doctorId',
+  fileUrl: 'fileUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  actionById: 'actionById',
-  action: 'action',
-  oldDate: 'oldDate',
-  newDate: 'newDate'
+  deletedAt: 'deletedAt'
 } as const
 
-export type AppointmentHistoryScalarFieldEnum = (typeof AppointmentHistoryScalarFieldEnum)[keyof typeof AppointmentHistoryScalarFieldEnum]
+export type PrescriptionScalarFieldEnum = (typeof PrescriptionScalarFieldEnum)[keyof typeof PrescriptionScalarFieldEnum]
+
+
+export const OtpVerificationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  code: 'code',
+  type: 'type',
+  expiresAt: 'expiresAt',
+  used: 'used',
+  attempts: 'attempts',
+  createdAt: 'createdAt'
+} as const
+
+export type OtpVerificationScalarFieldEnum = (typeof OtpVerificationScalarFieldEnum)[keyof typeof OtpVerificationScalarFieldEnum]
 
 
 export const SortOrder = {

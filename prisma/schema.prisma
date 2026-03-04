@@ -7,142 +7,193 @@ datasource db {
   provider = "postgresql"
 }
 
-// ------------------------------------ enums ------------------------------------
-enum UserRole {
-  PATIENT
-  DOCTOR
+// ------------------------ enums ------------------------
+enum Role {
   ADMIN
+  DOCTOR
+  PATIENT
+  HOSPITAL_MANAGER
 }
 
 enum AppointmentStatus {
-  SCHEDULED
-  RESCHEDULED
+  PENDING
+  CONFIRMED
+  DONE
   CANCELLED
-  COMPLETED
 }
 
-enum ActionType {
-  PATIENT_CANCELLED
-  PATIENT_RESCHEDULED
-  DOCTOR_RESCHEDULED
+enum OtpType {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
 }
 
-// ------------------------------------ models ------------------------------------
+// ------------------------ main authentication table ------------------------
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  phone     String? // optional
-  role      UserRole @default(PATIENT)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt // auto update timestamp when record is updated
+  id         Int       @id @default(autoincrement())
+  email      String?   @unique
+  password   String?
+  googleId   String?   @unique
+  role       Role
+  isVerified Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
 
-  // relationships
-  doctor        Doctor? // 1 to 1 optional relationship
-  appointments  Appointment[] // as patient - a user can have many appointments - 1 to many relationship
-  actionHistory AppointmentHistory[] // action performed by the user - 1 to many relationship
+  // Relationships
+  adminProfile           AdminProfile?
+  doctorProfile          DoctorProfile?
+  patientProfile         PatientProfile?
+  hospitalManagerProfile HospitalManagerProfile?
+  verifyOtp              OtpVerification[]
 }
 
-model Doctor {
-  id             Int      @id @default(autoincrement())
+// ------------------------ admin profile (one-to-one with user) ------------------------
+model AdminProfile {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+}
+
+// ------------------------ doctor profile ------------------------
+model DoctorProfile {
+  id             Int       @id @default(autoincrement())
+  userId         Int       @unique
+  doctorId       String    @unique
+  name           String
+  phone          String?
+  designation    String?
   specialization String?
-  experience     Int?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt // auto update timestamp when record is updated
+  user           User      @relation(fields: [userId], references: [id])
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
 
-  // relationships
-  userId Int  @unique
-  user   User @relation(fields: [userId], references: [id]) // 1 to 1 - mandatory - doctor must have a user account
-
-  hospitals    DoctorHospital[] // a doctor can have multiple hospitals - 1 to many relationship - join table
-  appointments Appointment[] // a doctor can have many appointments across all hospitals - 1 to many relationship
+  // Relationships
+  hospitals     DoctorHospital[]
+  availability  Availability[]
+  appointments  Appointment[]
+  prescriptions Prescription[]
 }
 
-model Hospital {
-  id        Int      @id @default(autoincrement())
+// ------------------------ patient profile ------------------------
+model PatientProfile {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique
+  patientId String    @unique
   name      String
-  location  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt // auto update timestamp when record is updated
+  phone     String?
+  user      User      @relation(fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  // relationships
-  doctors      DoctorHospital[] // a hospital can have many doctors - 1 to many relationship
-  appointments Appointment[] // a hospital can have many appointments - 1 to many relationship
+  appointments  Appointment[]
+  prescriptions Prescription[]
 }
 
+// ------------------------ hospital manager profile ------------------------
+model HospitalManagerProfile {
+  id         Int       @id @default(autoincrement())
+  userId     Int       @unique
+  employeeId String    @unique
+  hospitalId Int
+  user       User      @relation(fields: [userId], references: [id])
+  hospital   Hospital  @relation(fields: [hospitalId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+}
+
+// ------------------------ hospital ------------------------
+model Hospital {
+  id        Int       @id @default(autoincrement())
+  name      String
+  address   String
+  city      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  doctors      DoctorHospital[]
+  managers     HospitalManagerProfile[]
+  appointments Appointment[]
+}
+
+// ------------------------ doctor-hospital junction table ------------------------
 model DoctorHospital {
-  id         Int      @id @default(autoincrement())
+  id         Int @id @default(autoincrement())
   doctorId   Int
   hospitalId Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt // auto update timestamp when record is updated
 
-  // relationships
-  // Doctor <--> Hospital is many-to-many relationship - joined table
-  doctor       Doctor        @relation(fields: [doctorId], references: [id]) // One doctor works at many hospitals
-  hospital     Hospital      @relation(fields: [hospitalId], references: [id]) // One hospital has many doctors
-  appointments Appointment[] // a doctor in a specific hospital location can have many appointments there - 1 to many
+  doctor   DoctorProfile @relation(fields: [doctorId], references: [id])
+  hospital Hospital      @relation(fields: [hospitalId], references: [id])
+
+  @@unique([doctorId, hospitalId])
 }
 
-model Appointment {
-  id        Int               @id @default(autoincrement())
+// ------------------------ availability ------------------------
+model Availability {
+  id        Int       @id @default(autoincrement())
+  doctorId  Int
   date      DateTime
-  status    AppointmentStatus @default(SCHEDULED)
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt // auto update timestamp when record is updated
+  startTime String
+  endTime   String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
-  // relationships
-  patientId Int
-  patient   User @relation(fields: [patientId], references: [id])
-
-  doctorId Int
-  doctor   Doctor @relation(fields: [doctorId], references: [id])
-
-  hospitalId Int
-  hospital   Hospital @relation(fields: [hospitalId], references: [id])
-
-  doctorHospitalId Int
-  doctorHospital   DoctorHospital @relation(fields: [doctorHospitalId], references: [id])
-
-  history AppointmentHistory[] // 1 to many - each appointment can have many history records
-
-  // ✔ Appointment → Patient (many-to-one)
-
-  // Each appointment belongs to 1 patient.
-
-  // ✔ Appointment → Doctor (many-to-one)
-
-  // Belongs to 1 doctor.
-
-  // ✔ Appointment → Hospital (many-to-one)
-
-  // Belongs to 1 hospital.
-
-  // ✔ Appointment → DoctorHospital (many-to-one)
+  doctor DoctorProfile @relation(fields: [doctorId], references: [id])
 }
 
-model AppointmentHistory {
-  id            Int         @id @default(autoincrement())
-  appointmentId Int
-  appointment   Appointment @relation(fields: [appointmentId], references: [id])
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt // auto update timestamp when record is updated
+// ------------------------ appointment ------------------------
+model Appointment {
+  id         Int               @id @default(autoincrement())
+  patientId  Int
+  doctorId   Int
+  hospitalId Int
+  date       DateTime
+  time       String
+  status     AppointmentStatus @default(PENDING)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  deletedAt  DateTime?
 
-  // relationships
-  actionById Int
-  actionBy   User @relation(fields: [actionById], references: [id])
+  patient  PatientProfile @relation(fields: [patientId], references: [id])
+  doctor   DoctorProfile  @relation(fields: [doctorId], references: [id])
+  hospital Hospital       @relation(fields: [hospitalId], references: [id])
 
-  action ActionType // enum - patient_cancelled, patient_rescheduled, doctor_rescheduled
+  prescription Prescription?
+}
 
-  oldDate DateTime?
-  newDate DateTime?
+// ------------------------ prescription ------------------------
+model Prescription {
+  id            Int       @id @default(autoincrement())
+  appointmentId Int       @unique
+  patientId     Int
+  doctorId      Int
+  fileUrl       String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
 
-  // ✔ AppointmentHistory → Appointment (many-to-one)
+  appointment Appointment    @relation(fields: [appointmentId], references: [id])
+  patient     PatientProfile @relation(fields: [patientId], references: [id])
+  doctor      DoctorProfile  @relation(fields: [doctorId], references: [id])
+}
 
-  // Multiple changes in the same appointment.
+// ------------------------ OTP verification ------------------------
+model OtpVerification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  code      String
+  type      OtpType
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  attempts  Int      @default(0)
+  createdAt DateTime @default(now())
 
-  // ✔ AppointmentHistory → User (many-to-one)
-
-  // Records WHO made the change (doctor or patient).
+  user User @relation(fields: [userId], references: [id])
 }
