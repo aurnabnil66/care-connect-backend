@@ -1,15 +1,16 @@
 import gql from "graphql-tag";
 
-export const authTypeDefs = gql`
+export const adminTypeDefs = gql`
   scalar DateTime
 
   type AdminProfile {
-    id: ID!
-    userId: String!
+    userId: Int!
+    email: String!
+    approval: Boolean!
   }
 
   type Hospital {
-    id: ID!
+    id: Int!
     name: String!
     address: String!
     city: String!
@@ -22,12 +23,18 @@ export const authTypeDefs = gql`
     city: String!
   }
 
+  input approveByAdminInput {
+    userId: Int!
+    approval: Boolean!
+  }
+
   type Query {
-    getAdminProfile: AdminProfile
+    pendingAdmins: [AdminProfile!]!
     getAllHospitals: [Hospital!]!
   }
 
   type Mutation {
     createHospital(input: createHospitalInput!): Hospital!
+    approveByAdmin(input: approveByAdminInput!): AdminProfile
   }
 `;
