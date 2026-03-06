@@ -1,7 +1,5 @@
 import { DateTimeResolver } from "graphql-scalars";
 import { authService } from "./auth.service";
-import { authorize } from "@/graphql/authorize";
-import { Role } from "@/generated/enums";
 
 export const authResolvers = {
   DateTime: DateTimeResolver,
@@ -14,7 +12,19 @@ export const authResolvers = {
       try {
         return await authService.createAdmin(input);
       } catch (error) {
-        console.error("CREATE ADMIN ERROR:", error);
+        console.error("Create Admin Error:", error);
+        throw error;
+      }
+    },
+
+    registerAdmin: async (
+      _: any,
+      { input }: { input: { email: string; password: string } },
+    ) => {
+      try {
+        return await authService.registerAdmin(input);
+      } catch (error) {
+        console.error("Register Admin Error:", error);
         throw error;
       }
     },
@@ -23,20 +33,12 @@ export const authResolvers = {
       _: any,
       { input }: { input: { email: string; password: string } },
     ) => {
-      return await authService.loginAdmin(input);
+      try {
+        await authService.loginAdmin(input);
+      } catch (error) {
+        console.error("Login Admin Error:", error);
+        throw error;
+      }
     },
-
-    // createHospital: authorize(["ADMIN"])(
-    //   async (
-    //     _: any,
-    //     { input }: { input: { name: string; address: string; city: string } },
-    //     context: any,
-    //   ) => {
-    //     if (!context.user) throw new Error("Not authenticated");
-
-    //     // Create a new hospital using the input
-    //     return adminService.createHospital(input);
-    //   },
-    // ),
   },
 };

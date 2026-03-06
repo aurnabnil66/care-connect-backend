@@ -6,11 +6,12 @@ export const authTypeDefs = gql`
   type CreateAdminPayload {
     userId: ID!
     email: String!
+    approval: Boolean!
   }
 
   type AdminProfile {
-    id: ID!
     userId: String!
+    approval: Boolean!
   }
 
   type LoginPayload {
@@ -28,6 +29,10 @@ export const authTypeDefs = gql`
   input LoginInput {
     email: String!
     password: String!
+  }
+
+  type Query {
+    pendingAdmins: [AdminProfile!]!
   }
 
   type Mutation {

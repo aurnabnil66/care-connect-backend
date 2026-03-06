@@ -29,16 +29,21 @@ export type AggregateAdminProfile = {
 export type AdminProfileAvgAggregateOutputType = {
   id: number | null
   userId: number | null
+  approvedBy: number | null
 }
 
 export type AdminProfileSumAggregateOutputType = {
   id: number | null
   userId: number | null
+  approvedBy: number | null
 }
 
 export type AdminProfileMinAggregateOutputType = {
   id: number | null
   userId: number | null
+  approval: boolean | null
+  approvedBy: number | null
+  approvedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -47,6 +52,9 @@ export type AdminProfileMinAggregateOutputType = {
 export type AdminProfileMaxAggregateOutputType = {
   id: number | null
   userId: number | null
+  approval: boolean | null
+  approvedBy: number | null
+  approvedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
   deletedAt: Date | null
@@ -55,6 +63,9 @@ export type AdminProfileMaxAggregateOutputType = {
 export type AdminProfileCountAggregateOutputType = {
   id: number
   userId: number
+  approval: number
+  approvedBy: number
+  approvedAt: number
   createdAt: number
   updatedAt: number
   deletedAt: number
@@ -65,16 +76,21 @@ export type AdminProfileCountAggregateOutputType = {
 export type AdminProfileAvgAggregateInputType = {
   id?: true
   userId?: true
+  approvedBy?: true
 }
 
 export type AdminProfileSumAggregateInputType = {
   id?: true
   userId?: true
+  approvedBy?: true
 }
 
 export type AdminProfileMinAggregateInputType = {
   id?: true
   userId?: true
+  approval?: true
+  approvedBy?: true
+  approvedAt?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -83,6 +99,9 @@ export type AdminProfileMinAggregateInputType = {
 export type AdminProfileMaxAggregateInputType = {
   id?: true
   userId?: true
+  approval?: true
+  approvedBy?: true
+  approvedAt?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -91,6 +110,9 @@ export type AdminProfileMaxAggregateInputType = {
 export type AdminProfileCountAggregateInputType = {
   id?: true
   userId?: true
+  approval?: true
+  approvedBy?: true
+  approvedAt?: true
   createdAt?: true
   updatedAt?: true
   deletedAt?: true
@@ -186,6 +208,9 @@ export type AdminProfileGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type AdminProfileGroupByOutputType = {
   id: number
   userId: number
+  approval: boolean
+  approvedBy: number | null
+  approvedAt: Date | null
   createdAt: Date
   updatedAt: Date
   deletedAt: Date | null
@@ -217,6 +242,9 @@ export type AdminProfileWhereInput = {
   NOT?: Prisma.AdminProfileWhereInput | Prisma.AdminProfileWhereInput[]
   id?: Prisma.IntFilter<"AdminProfile"> | number
   userId?: Prisma.IntFilter<"AdminProfile"> | number
+  approval?: Prisma.BoolFilter<"AdminProfile"> | boolean
+  approvedBy?: Prisma.IntNullableFilter<"AdminProfile"> | number | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"AdminProfile"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"AdminProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AdminProfile"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AdminProfile"> | Date | string | null
@@ -226,6 +254,9 @@ export type AdminProfileWhereInput = {
 export type AdminProfileOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  approval?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -238,6 +269,9 @@ export type AdminProfileWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AdminProfileWhereInput | Prisma.AdminProfileWhereInput[]
   OR?: Prisma.AdminProfileWhereInput[]
   NOT?: Prisma.AdminProfileWhereInput | Prisma.AdminProfileWhereInput[]
+  approval?: Prisma.BoolFilter<"AdminProfile"> | boolean
+  approvedBy?: Prisma.IntNullableFilter<"AdminProfile"> | number | null
+  approvedAt?: Prisma.DateTimeNullableFilter<"AdminProfile"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"AdminProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"AdminProfile"> | Date | string
   deletedAt?: Prisma.DateTimeNullableFilter<"AdminProfile"> | Date | string | null
@@ -247,6 +281,9 @@ export type AdminProfileWhereUniqueInput = Prisma.AtLeast<{
 export type AdminProfileOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  approval?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrderInput | Prisma.SortOrder
+  approvedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -263,12 +300,18 @@ export type AdminProfileScalarWhereWithAggregatesInput = {
   NOT?: Prisma.AdminProfileScalarWhereWithAggregatesInput | Prisma.AdminProfileScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"AdminProfile"> | number
   userId?: Prisma.IntWithAggregatesFilter<"AdminProfile"> | number
+  approval?: Prisma.BoolWithAggregatesFilter<"AdminProfile"> | boolean
+  approvedBy?: Prisma.IntNullableWithAggregatesFilter<"AdminProfile"> | number | null
+  approvedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AdminProfile"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AdminProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"AdminProfile"> | Date | string
   deletedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"AdminProfile"> | Date | string | null
 }
 
 export type AdminProfileCreateInput = {
+  approval?: boolean
+  approvedBy?: number | null
+  approvedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -278,12 +321,18 @@ export type AdminProfileCreateInput = {
 export type AdminProfileUncheckedCreateInput = {
   id?: number
   userId: number
+  approval?: boolean
+  approvedBy?: number | null
+  approvedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
 }
 
 export type AdminProfileUpdateInput = {
+  approval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -293,6 +342,9 @@ export type AdminProfileUpdateInput = {
 export type AdminProfileUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  approval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -301,12 +353,18 @@ export type AdminProfileUncheckedUpdateInput = {
 export type AdminProfileCreateManyInput = {
   id?: number
   userId: number
+  approval?: boolean
+  approvedBy?: number | null
+  approvedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
 }
 
 export type AdminProfileUpdateManyMutationInput = {
+  approval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -315,6 +373,9 @@ export type AdminProfileUpdateManyMutationInput = {
 export type AdminProfileUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  approval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -328,6 +389,9 @@ export type AdminProfileNullableScalarRelationFilter = {
 export type AdminProfileCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  approval?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -336,11 +400,15 @@ export type AdminProfileCountOrderByAggregateInput = {
 export type AdminProfileAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
 }
 
 export type AdminProfileMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  approval?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -349,6 +417,9 @@ export type AdminProfileMaxOrderByAggregateInput = {
 export type AdminProfileMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  approval?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
+  approvedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   deletedAt?: Prisma.SortOrder
@@ -357,6 +428,7 @@ export type AdminProfileMinOrderByAggregateInput = {
 export type AdminProfileSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
+  approvedBy?: Prisma.SortOrder
 }
 
 export type AdminProfileCreateNestedOneWithoutUserInput = {
@@ -391,7 +463,18 @@ export type AdminProfileUncheckedUpdateOneWithoutUserNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AdminProfileUpdateToOneWithWhereWithoutUserInput, Prisma.AdminProfileUpdateWithoutUserInput>, Prisma.AdminProfileUncheckedUpdateWithoutUserInput>
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type AdminProfileCreateWithoutUserInput = {
+  approval?: boolean
+  approvedBy?: number | null
+  approvedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -399,6 +482,9 @@ export type AdminProfileCreateWithoutUserInput = {
 
 export type AdminProfileUncheckedCreateWithoutUserInput = {
   id?: number
+  approval?: boolean
+  approvedBy?: number | null
+  approvedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   deletedAt?: Date | string | null
@@ -421,6 +507,9 @@ export type AdminProfileUpdateToOneWithWhereWithoutUserInput = {
 }
 
 export type AdminProfileUpdateWithoutUserInput = {
+  approval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -428,6 +517,9 @@ export type AdminProfileUpdateWithoutUserInput = {
 
 export type AdminProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  approval?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  approvedBy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  approvedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -438,6 +530,9 @@ export type AdminProfileUncheckedUpdateWithoutUserInput = {
 export type AdminProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  approval?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -447,6 +542,9 @@ export type AdminProfileSelect<ExtArgs extends runtime.Types.Extensions.Internal
 export type AdminProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  approval?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -456,6 +554,9 @@ export type AdminProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
 export type AdminProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
+  approval?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
@@ -465,12 +566,15 @@ export type AdminProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type AdminProfileSelectScalar = {
   id?: boolean
   userId?: boolean
+  approval?: boolean
+  approvedBy?: boolean
+  approvedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   deletedAt?: boolean
 }
 
-export type AdminProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["adminProfile"]>
+export type AdminProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "approval" | "approvedBy" | "approvedAt" | "createdAt" | "updatedAt" | "deletedAt", ExtArgs["result"]["adminProfile"]>
 export type AdminProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -489,6 +593,9 @@ export type $AdminProfilePayload<ExtArgs extends runtime.Types.Extensions.Intern
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     userId: number
+    approval: boolean
+    approvedBy: number | null
+    approvedAt: Date | null
     createdAt: Date
     updatedAt: Date
     deletedAt: Date | null
@@ -918,6 +1025,9 @@ export interface Prisma__AdminProfileClient<T, Null = never, ExtArgs extends run
 export interface AdminProfileFieldRefs {
   readonly id: Prisma.FieldRef<"AdminProfile", 'Int'>
   readonly userId: Prisma.FieldRef<"AdminProfile", 'Int'>
+  readonly approval: Prisma.FieldRef<"AdminProfile", 'Boolean'>
+  readonly approvedBy: Prisma.FieldRef<"AdminProfile", 'Int'>
+  readonly approvedAt: Prisma.FieldRef<"AdminProfile", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"AdminProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"AdminProfile", 'DateTime'>
   readonly deletedAt: Prisma.FieldRef<"AdminProfile", 'DateTime'>
