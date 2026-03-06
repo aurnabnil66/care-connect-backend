@@ -6,23 +6,6 @@ import { Role } from "@/generated/enums";
 export const authResolvers = {
   DateTime: DateTimeResolver,
 
-  Query: {
-    getAdminProfile: async (_: any, __: any, context: any) => {
-      // Defensive check
-      if (!context.user) throw new Error("Not authenticated");
-
-      // Fetch admin profile by user ID and include user details
-      return authService.getAdminProfileByUserId(context.user.id);
-    },
-
-    // getAllHospitals: authorize(["ADMIN"])(
-    //   async (_: any, __: any, context: any) => {
-    //     // context.user is available if needed
-    //     return adminService.getAllHospitals();
-    //   },
-    // ),
-  },
-
   Mutation: {
     createAdmin: async (
       _: any,

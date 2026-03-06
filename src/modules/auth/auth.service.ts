@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { Role } from "@/generated/enums";
 
 export const authService = {
-  // Create admin
+  // Create / Register admin
   async createAdmin(data: { email: string; password: string }) {
     const existingUser = await prisma.user.findUnique({
       where: { email: data.email },
@@ -67,33 +67,4 @@ export const authService = {
       role: user.role,
     };
   },
-
-  async getAdminProfileByUserId(userId: string) {
-    const adminProfile = await prisma.adminProfile.findUnique({
-      where: { userId: Number(userId) },
-      include: {
-        user: true, // optional but useful
-      },
-    });
-
-    if (!adminProfile) {
-      // Handle the case when adminProfile is undefined
-      return null;
-    }
-
-    // Access the user property safely
-    return adminProfile.user;
-  },
-
-  //   async createHospital(data: { name: string; address: string; city: string }) {
-  //     return prisma.hospital.create({
-  //       data,
-  //     });
-  //   },
-
-  //   async getAllHospitals() {
-  //     return prisma.hospital.findMany({
-  //       orderBy: { createdAt: "desc" },
-  //     });
-  //   },
 };

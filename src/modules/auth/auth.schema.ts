@@ -20,14 +20,6 @@ export const authTypeDefs = gql`
     role: String!
   }
 
-  # type Hospital {
-  #   id: ID!
-  #   name: String!
-  #   address: String!
-  #   city: String!
-  #   createdAt: DateTime
-  # }
-
   input CreateAdminInput {
     email: String!
     password: String!
@@ -38,20 +30,8 @@ export const authTypeDefs = gql`
     password: String!
   }
 
-  # input createHospitalInput {
-  #   name: String!
-  #   address: String!
-  #   city: String!
-  # }
-
-  type Query {
-    getAdminProfile: AdminProfile
-    # getAllHospitals: [Hospital!]!
-  }
-
   type Mutation {
     createAdmin(input: CreateAdminInput!): CreateAdminPayload!
     loginAdmin(input: LoginInput!): LoginPayload!
-    # createHospital(input: createHospitalInput!): Hospital!
   }
 `;
