@@ -109,4 +109,23 @@ export const authService = {
       role: user.role,
     };
   },
+
+  // Get admin profile
+  async getAdminProfile(userId: number) {
+    const adminProfile = await prisma.adminProfile.findUnique({
+      where: { userId },
+      include: {
+        user: true, // fetches email, role, etc.
+      },
+    });
+
+    if (!adminProfile) throw new Error("Admin profile not found");
+
+    return {
+      userId: adminProfile.userId,
+      email: adminProfile.user.email,
+      role: adminProfile.user.role,
+      approval: adminProfile.approval,
+    };
+  },
 };

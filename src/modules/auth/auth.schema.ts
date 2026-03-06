@@ -4,19 +4,20 @@ export const authTypeDefs = gql`
   scalar DateTime
 
   type CreateAdminPayload {
-    userId: ID!
+    userId: Int!
     email: String!
     approval: Boolean!
   }
 
   type AdminProfile {
-    userId: String!
+    userId: Int!
+    email: String!
     approval: Boolean!
   }
 
   type LoginPayload {
     token: String!
-    userId: ID!
+    userId: Int!
     email: String!
     role: String!
   }
@@ -32,7 +33,7 @@ export const authTypeDefs = gql`
   }
 
   type Query {
-    pendingAdmins: [AdminProfile!]!
+    getAdminProfile: AdminProfile
   }
 
   type Mutation {

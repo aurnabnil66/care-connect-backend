@@ -4,6 +4,17 @@ import { authService } from "./auth.service";
 export const authResolvers = {
   DateTime: DateTimeResolver,
 
+  Query: {
+    getAdminProfile: async (_: any, __: any, context: any) => {
+      const userId = context.user?.id;
+      // Defensive check
+      if (!userId) throw new Error("Not authenticated");
+
+      // Fetch admin profile by user ID and include user details
+      return await authService.getAdminProfile(userId);
+    },
+  },
+
   Mutation: {
     createAdmin: async (
       _: any,
@@ -34,7 +45,7 @@ export const authResolvers = {
       { input }: { input: { email: string; password: string } },
     ) => {
       try {
-        await authService.loginAdmin(input);
+        return await authService.loginAdmin(input);
       } catch (error) {
         console.error("Login Admin Error:", error);
         throw error;
