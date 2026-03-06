@@ -4,29 +4,23 @@ export const authTypeDefs = gql`
   scalar DateTime
 
   type CreateAdminPayload {
-    userId: ID!
+    userId: Int!
     email: String!
+    approval: Boolean!
   }
 
   type AdminProfile {
-    id: ID!
-    userId: String!
+    userId: Int!
+    email: String!
+    approval: Boolean!
   }
 
   type LoginPayload {
     token: String!
-    userId: ID!
+    userId: Int!
     email: String!
     role: String!
   }
-
-  # type Hospital {
-  #   id: ID!
-  #   name: String!
-  #   address: String!
-  #   city: String!
-  #   createdAt: DateTime
-  # }
 
   input CreateAdminInput {
     email: String!
@@ -38,20 +32,13 @@ export const authTypeDefs = gql`
     password: String!
   }
 
-  # input createHospitalInput {
-  #   name: String!
-  #   address: String!
-  #   city: String!
-  # }
-
   type Query {
     getAdminProfile: AdminProfile
-    # getAllHospitals: [Hospital!]!
   }
 
   type Mutation {
     createAdmin(input: CreateAdminInput!): CreateAdminPayload!
+    registerAdmin(input: CreateAdminInput!): CreateAdminPayload!
     loginAdmin(input: LoginInput!): LoginPayload!
-    # createHospital(input: createHospitalInput!): Hospital!
   }
 `;

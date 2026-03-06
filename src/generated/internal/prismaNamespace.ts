@@ -1285,6 +1285,9 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const AdminProfileScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  approval: 'approval',
+  approvedBy: 'approvedBy',
+  approvedAt: 'approvedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'

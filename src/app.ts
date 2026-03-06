@@ -6,6 +6,8 @@ import { expressMiddleware } from "@as-integrations/express5";
 import { createContext } from "@/graphql/context";
 import { authTypeDefs } from "./modules/auth/auth.schema";
 import { authResolvers } from "./modules/auth/auth.resolver";
+import { adminTypeDefs } from "./modules/admin/admin.schema";
+import { adminResolvers } from "./modules/admin/admin.resolver";
 
 export const app = express();
 
@@ -13,8 +15,8 @@ export const httpServer = http.createServer(app);
 
 // Create Apollo Server
 const server = new ApolloServer({
-  typeDefs: [authTypeDefs],
-  resolvers: [authResolvers],
+  typeDefs: [authTypeDefs, adminTypeDefs],
+  resolvers: [authResolvers, adminResolvers],
 });
 
 async function startServer() {

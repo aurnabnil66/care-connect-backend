@@ -49,9 +49,14 @@ model User {
 
 // ------------------------ admin profile (one-to-one with user) ------------------------
 model AdminProfile {
-  id        Int       @id @default(autoincrement())
-  userId    Int       @unique
-  user      User      @relation(fields: [userId], references: [id])
+  id         Int       @id @default(autoincrement())
+  userId     Int       @unique
+  approval   Boolean   @default(false)
+  approvedBy Int?
+  approvedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
@@ -59,17 +64,19 @@ model AdminProfile {
 
 // ------------------------ doctor profile ------------------------
 model DoctorProfile {
-  id             Int       @id @default(autoincrement())
-  userId         Int       @unique
-  doctorId       String    @unique
+  id             Int     @id @default(autoincrement())
+  userId         Int     @unique
+  doctorId       String  @unique
   name           String
   phone          String?
   designation    String?
   specialization String?
-  user           User      @relation(fields: [userId], references: [id])
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  deletedAt      DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 
   // Relationships
   hospitals     DoctorHospital[]
@@ -80,12 +87,14 @@ model DoctorProfile {
 
 // ------------------------ patient profile ------------------------
 model PatientProfile {
-  id        Int       @id @default(autoincrement())
-  userId    Int       @unique
-  patientId String    @unique
+  id        Int     @id @default(autoincrement())
+  userId    Int     @unique
+  patientId String  @unique
   name      String
   phone     String?
-  user      User      @relation(fields: [userId], references: [id])
+
+  user User @relation(fields: [userId], references: [id])
+
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
@@ -96,15 +105,17 @@ model PatientProfile {
 
 // ------------------------ hospital manager profile ------------------------
 model HospitalManagerProfile {
-  id         Int       @id @default(autoincrement())
-  userId     Int       @unique
-  employeeId String    @unique
+  id         Int    @id @default(autoincrement())
+  userId     Int    @unique
+  employeeId String @unique
   hospitalId Int
-  user       User      @relation(fields: [userId], references: [id])
-  hospital   Hospital  @relation(fields: [hospitalId], references: [id])
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
-  deletedAt  DateTime?
+
+  user     User     @relation(fields: [userId], references: [id])
+  hospital Hospital @relation(fields: [hospitalId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }
 
 // ------------------------ hospital ------------------------
