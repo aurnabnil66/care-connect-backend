@@ -1,6 +1,43 @@
 import { prisma } from "@/lib/client";
+import bcrypt from "bcryptjs";
+import { Role } from "@/generated/enums";
 
 export const adminService = {
+  // Create admin - existing admin will create another admin
+  async createAdmin(data: { email: string; password: string }) {
+    const existingUser = await prisma.user.findUnique({
+      where: { email: data.email },
+    });
+
+    if (existingUser) {
+      throw new Error("Admin already exists with this email");
+    }
+
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+
+    const user = await prisma.user.create({
+      data: {
+        email: data.email,
+        password: hashedPassword,
+        role: Role.ADMIN,
+        isVerified: true,
+      },
+    });
+
+    const adminProfile = await prisma.adminProfile.create({
+      data: {
+        userId: user.id,
+        approval: true, // set approval to true
+      },
+    });
+
+    return {
+      userId: user.id,
+      email: user.email,
+      approval: adminProfile.approval,
+    };
+  },
+
   // Get Pending Admins
   async getPendingAdmins() {
     const pendingAdmins = await prisma.adminProfile.findMany({

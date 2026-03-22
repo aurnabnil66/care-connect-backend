@@ -16,18 +16,6 @@ export const authResolvers = {
   },
 
   Mutation: {
-    createAdmin: async (
-      _: any,
-      { input }: { input: { email: string; password: string } },
-    ) => {
-      try {
-        return await authService.createAdmin(input);
-      } catch (error) {
-        console.error("Create Admin Error:", error);
-        throw error;
-      }
-    },
-
     registerAdmin: async (
       _: any,
       { input }: { input: { email: string; password: string } },

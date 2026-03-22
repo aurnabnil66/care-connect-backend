@@ -3,12 +3,6 @@ import gql from "graphql-tag";
 export const authTypeDefs = gql`
   scalar DateTime
 
-  type CreateAdminPayload {
-    userId: Int!
-    email: String!
-    approval: Boolean!
-  }
-
   type AdminProfile {
     userId: Int!
     email: String!
@@ -22,11 +16,6 @@ export const authTypeDefs = gql`
     role: String!
   }
 
-  input CreateAdminInput {
-    email: String!
-    password: String!
-  }
-
   input LoginInput {
     email: String!
     password: String!
@@ -37,7 +26,6 @@ export const authTypeDefs = gql`
   }
 
   type Mutation {
-    createAdmin(input: CreateAdminInput!): CreateAdminPayload!
     registerAdmin(input: CreateAdminInput!): CreateAdminPayload!
     loginAdmin(input: LoginInput!): LoginPayload!
   }

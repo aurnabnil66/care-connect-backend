@@ -17,6 +17,18 @@ export const adminResolvers = {
   },
 
   Mutation: {
+    createAdmin: async (
+      _: any,
+      { input }: { input: { email: string; password: string } },
+    ) => {
+      try {
+        return await adminService.createAdmin(input);
+      } catch (error) {
+        console.error("Create Admin Error:", error);
+        throw error;
+      }
+    },
+
     approveByAdmin: async (
       _: any,
       { input }: { input: { userId: number; approval: boolean } },

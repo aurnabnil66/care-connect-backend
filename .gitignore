@@ -21,6 +21,7 @@ build/
 
 # Prisma
 prisma/migrations/
+/src/generated
 
 # System Files
 .DS_Store
@@ -32,6 +33,4 @@ Thumbs.db
 
 .github
 
-/src/generated/prisma
 
-/generated/prisma

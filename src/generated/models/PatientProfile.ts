@@ -1440,6 +1440,11 @@ export type PatientProfileFindManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Skip the first `n` PatientProfiles.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of PatientProfiles.
+   */
   distinct?: Prisma.PatientProfileScalarFieldEnum | Prisma.PatientProfileScalarFieldEnum[]
 }
 

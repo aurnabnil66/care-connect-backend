@@ -1216,6 +1216,11 @@ export type DoctorHospitalFindManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Skip the first `n` DoctorHospitals.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of DoctorHospitals.
+   */
   distinct?: Prisma.DoctorHospitalScalarFieldEnum | Prisma.DoctorHospitalScalarFieldEnum[]
 }
 

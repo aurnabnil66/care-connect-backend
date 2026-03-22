@@ -15,7 +15,7 @@ services:
     command: npm run dev
 
   postgres:
-    image: postgres:18
+    image: postgres:17
     container_name: care_connect_db
     restart: always
     environment:
@@ -23,9 +23,9 @@ services:
       POSTGRES_PASSWORD: test1234
       POSTGRES_DB: care_connect_db
     ports:
-      - "5432:5432" # port on local machine : port on container
+      - 65432:5432 # port on local machine : port on container
     volumes:
-      - postgres_data:/var/lib/postgresql
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:

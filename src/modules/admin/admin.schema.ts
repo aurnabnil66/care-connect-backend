@@ -3,6 +3,12 @@ import gql from "graphql-tag";
 export const adminTypeDefs = gql`
   scalar DateTime
 
+  type CreateAdminPayload {
+    userId: Int!
+    email: String!
+    approval: Boolean!
+  }
+
   type AdminProfile {
     userId: Int!
     email: String!
@@ -15,6 +21,11 @@ export const adminTypeDefs = gql`
     address: String!
     city: String!
     createdAt: DateTime
+  }
+
+  input CreateAdminInput {
+    email: String!
+    password: String!
   }
 
   input createHospitalInput {
@@ -34,6 +45,7 @@ export const adminTypeDefs = gql`
   }
 
   type Mutation {
+    createAdmin(input: CreateAdminInput!): CreateAdminPayload!
     createHospital(input: createHospitalInput!): Hospital!
     approveByAdmin(input: approveByAdminInput!): AdminProfile
   }

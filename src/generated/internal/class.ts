@@ -17,8 +17,8 @@ import type * as Prisma from "./prismaNamespace"
 
 const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
-  "clientVersion": "7.4.0",
-  "engineVersion": "ab56fe763f921d033a6c195e7ddeb3e255bdbb57",
+  "clientVersion": "7.5.0",
+  "engineVersion": "280c870be64f457428992c43c1f6d557fab6e29e",
   "activeProvider": "postgresql",
   "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../src/generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\n// ------------------------ enums ------------------------\nenum Role {\n  ADMIN\n  DOCTOR\n  PATIENT\n  HOSPITAL_MANAGER\n}\n\nenum AppointmentStatus {\n  PENDING\n  CONFIRMED\n  DONE\n  CANCELLED\n}\n\nenum OtpType {\n  EMAIL_VERIFICATION\n  PASSWORD_RESET\n}\n\n// ------------------------ main authentication table ------------------------\nmodel User {\n  id         Int       @id @default(autoincrement())\n  email      String?   @unique\n  password   String?\n  googleId   String?   @unique\n  role       Role\n  isVerified Boolean   @default(false)\n  createdAt  DateTime  @default(now())\n  updatedAt  DateTime  @updatedAt\n  deletedAt  DateTime?\n\n  // Relationships\n  adminProfile           AdminProfile?\n  doctorProfile          DoctorProfile?\n  patientProfile         PatientProfile?\n  hospitalManagerProfile HospitalManagerProfile?\n  verifyOtp              OtpVerification[]\n}\n\n// ------------------------ admin profile (one-to-one with user) ------------------------\nmodel AdminProfile {\n  id         Int       @id @default(autoincrement())\n  userId     Int       @unique\n  approval   Boolean   @default(false)\n  approvedBy Int?\n  approvedAt DateTime?\n\n  user User @relation(fields: [userId], references: [id])\n\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  deletedAt DateTime?\n}\n\n// ------------------------ doctor profile ------------------------\nmodel DoctorProfile {\n  id             Int     @id @default(autoincrement())\n  userId         Int     @unique\n  doctorId       String  @unique\n  name           String\n  phone          String?\n  designation    String?\n  specialization String?\n\n  user User @relation(fields: [userId], references: [id])\n\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  deletedAt DateTime?\n\n  // Relationships\n  hospitals     DoctorHospital[]\n  availability  Availability[]\n  appointments  Appointment[]\n  prescriptions Prescription[]\n}\n\n// ------------------------ patient profile ------------------------\nmodel PatientProfile {\n  id        Int     @id @default(autoincrement())\n  userId    Int     @unique\n  patientId String  @unique\n  name      String\n  phone     String?\n\n  user User @relation(fields: [userId], references: [id])\n\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  deletedAt DateTime?\n\n  appointments  Appointment[]\n  prescriptions Prescription[]\n}\n\n// ------------------------ hospital manager profile ------------------------\nmodel HospitalManagerProfile {\n  id         Int    @id @default(autoincrement())\n  userId     Int    @unique\n  employeeId String @unique\n  hospitalId Int\n\n  user     User     @relation(fields: [userId], references: [id])\n  hospital Hospital @relation(fields: [hospitalId], references: [id])\n\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  deletedAt DateTime?\n}\n\n// ------------------------ hospital ------------------------\nmodel Hospital {\n  id        Int       @id @default(autoincrement())\n  name      String\n  address   String\n  city      String\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  deletedAt DateTime?\n\n  doctors      DoctorHospital[]\n  managers     HospitalManagerProfile[]\n  appointments Appointment[]\n}\n\n// ------------------------ doctor-hospital junction table ------------------------\nmodel DoctorHospital {\n  id         Int @id @default(autoincrement())\n  doctorId   Int\n  hospitalId Int\n\n  doctor   DoctorProfile @relation(fields: [doctorId], references: [id])\n  hospital Hospital      @relation(fields: [hospitalId], references: [id])\n\n  @@unique([doctorId, hospitalId])\n}\n\n// ------------------------ availability ------------------------\nmodel Availability {\n  id        Int       @id @default(autoincrement())\n  doctorId  Int\n  date      DateTime\n  startTime String\n  endTime   String\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @updatedAt\n  deletedAt DateTime?\n\n  doctor DoctorProfile @relation(fields: [doctorId], references: [id])\n}\n\n// ------------------------ appointment ------------------------\nmodel Appointment {\n  id         Int               @id @default(autoincrement())\n  patientId  Int\n  doctorId   Int\n  hospitalId Int\n  date       DateTime\n  time       String\n  status     AppointmentStatus @default(PENDING)\n  createdAt  DateTime          @default(now())\n  updatedAt  DateTime          @updatedAt\n  deletedAt  DateTime?\n\n  patient  PatientProfile @relation(fields: [patientId], references: [id])\n  doctor   DoctorProfile  @relation(fields: [doctorId], references: [id])\n  hospital Hospital       @relation(fields: [hospitalId], references: [id])\n\n  prescription Prescription?\n}\n\n// ------------------------ prescription ------------------------\nmodel Prescription {\n  id            Int       @id @default(autoincrement())\n  appointmentId Int       @unique\n  patientId     Int\n  doctorId      Int\n  fileUrl       String\n  createdAt     DateTime  @default(now())\n  updatedAt     DateTime  @updatedAt\n  deletedAt     DateTime?\n\n  appointment Appointment    @relation(fields: [appointmentId], references: [id])\n  patient     PatientProfile @relation(fields: [patientId], references: [id])\n  doctor      DoctorProfile  @relation(fields: [doctorId], references: [id])\n}\n\n// ------------------------ OTP verification ------------------------\nmodel OtpVerification {\n  id        Int      @id @default(autoincrement())\n  userId    Int\n  code      String\n  type      OtpType\n  expiresAt DateTime\n  used      Boolean  @default(false)\n  attempts  Int      @default(0)\n  createdAt DateTime @default(now())\n\n  user User @relation(fields: [userId], references: [id])\n}\n",
   "runtimeDataModel": {
@@ -67,7 +67,9 @@ export interface PrismaClientConstructor {
    * Type-safe database client for TypeScript
    * @example
    * ```
-   * const prisma = new PrismaClient()
+   * const prisma = new PrismaClient({
+   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+   * })
    * // Fetch zero or more Users
    * const users = await prisma.user.findMany()
    * ```
@@ -89,7 +91,9 @@ export interface PrismaClientConstructor {
  * Type-safe database client for TypeScript
  * @example
  * ```
- * const prisma = new PrismaClient()
+ * const prisma = new PrismaClient({
+ *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
+ * })
  * // Fetch zero or more Users
  * const users = await prisma.user.findMany()
  * ```
@@ -174,7 +178,7 @@ export interface PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
    */
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): runtime.Types.Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
