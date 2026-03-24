@@ -1521,6 +1521,11 @@ export type PrescriptionFindManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Skip the first `n` Prescriptions.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Prescriptions.
+   */
   distinct?: Prisma.PrescriptionScalarFieldEnum | Prisma.PrescriptionScalarFieldEnum[]
 }
 

@@ -1,0 +1,31 @@
+services:
+  api:
+    build: .
+    container_name: care_connect_api
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    environment:
+      PORT: 8000
+      DATABASE_URL: postgresql://postgres:test1234@postgres:5432/care_connect_db?schema=public
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: npm run dev
+
+  postgres:
+    image: postgres:17
+    container_name: care_connect_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test1234
+      POSTGRES_DB: care_connect_db
+    ports:
+      - 65432:5432 # port on local machine : port on container
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

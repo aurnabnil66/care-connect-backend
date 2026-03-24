@@ -49,8 +49,9 @@ model User {
 
 // ------------------------ admin profile (one-to-one with user) ------------------------
 model AdminProfile {
-  id         Int       @id @default(autoincrement())
-  userId     Int       @unique
+  userId     Int       @id
+  name       String?
+  phone      String?
   approval   Boolean   @default(false)
   approvedBy Int?
   approvedAt DateTime?

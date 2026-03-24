@@ -1282,6 +1282,11 @@ export type OtpVerificationFindManyArgs<ExtArgs extends runtime.Types.Extensions
    * Skip the first `n` OtpVerifications.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of OtpVerifications.
+   */
   distinct?: Prisma.OtpVerificationScalarFieldEnum | Prisma.OtpVerificationScalarFieldEnum[]
 }
 
