@@ -26,7 +26,7 @@ export const authTypeDefs = gql`
   }
 
   type Mutation {
-    registerAdmin(input: CreateAdminInput!): CreateAdminPayload!
+    registerAdmin(input: CreateAdminInput!): AdminProfile!
     loginAdmin(input: LoginInput!): LoginPayload!
   }
 `;

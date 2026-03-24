@@ -3,16 +3,13 @@ import gql from "graphql-tag";
 export const adminTypeDefs = gql`
   scalar DateTime
 
-  type CreateAdminPayload {
-    userId: Int!
-    email: String!
-    approval: Boolean!
-  }
-
+  # ---------------------------- Types ----------------------------
   type AdminProfile {
     userId: Int!
-    email: String!
-    approval: Boolean!
+    name: String
+    phone: String
+    email: String
+    approval: Boolean
   }
 
   type Hospital {
@@ -23,30 +20,97 @@ export const adminTypeDefs = gql`
     createdAt: DateTime
   }
 
+  type CreateAdminResponse {
+    userId: Int
+    email: String
+    name: String
+    phone: String
+    approval: Boolean
+  }
+
+  type UpdateAdminResponse {
+    userId: Int
+    email: String
+    name: String
+    phone: String
+    approval: Boolean
+  }
+
+  type DeleteAdminResponse {
+    userId: Int
+    email: String
+    name: String
+    phone: String
+    approval: Boolean
+  }
+
+  # ---------------------------- Inputs ----------------------------
   input CreateAdminInput {
     email: String!
     password: String!
+    name: String
+    phone: String
   }
 
-  input createHospitalInput {
+  input UpdateAdminInput {
+    userId: Int!
+    email: String
+    password: String
+    name: String
+    phone: String
+    approval: Boolean
+  }
+
+  input DeleteAdminInput {
+    userId: Int!
+  }
+
+  input CreateHospitalInput {
     name: String!
     address: String!
     city: String!
   }
 
-  input approveByAdminInput {
+  input UpdateHospitalInput {
+    id: Int!
+    name: String
+    address: String
+    city: String
+  }
+
+  input DeleteHospitalInput {
+    id: Int!
+  }
+
+  input ApproveByAdminInput {
     userId: Int!
     approval: Boolean!
   }
 
+  # ---------------------------- Queries ----------------------------
   type Query {
-    pendingAdmins: [AdminProfile!]!
-    getAllHospitals: [Hospital!]!
+    # Admin
+    getAllAdmins(page: Int, limit: Int): [AdminProfile!]!
+    getPendingAdmins(page: Int, limit: Int): [AdminProfile!]!
+
+    # Hospital
+    getAllHospitals(page: Int, limit: Int): [Hospital!]!
+    getHospitalById(id: Int!): Hospital
   }
 
+  # ---------------------------- Mutations ----------------------------
   type Mutation {
-    createAdmin(input: CreateAdminInput!): CreateAdminPayload!
-    createHospital(input: createHospitalInput!): Hospital!
-    approveByAdmin(input: approveByAdminInput!): AdminProfile
+    # Admin
+    createAdmin(input: CreateAdminInput!): CreateAdminResponse!
+    updateAdmin(input: UpdateAdminInput!): UpdateAdminResponse!
+    deleteAdmin(input: DeleteAdminInput!): DeleteAdminResponse!
+
+    # Admin Approval
+    approveByAdmin(input: ApproveByAdminInput!): AdminProfile
+
+    # Hospital
+    createHospital(input: CreateHospitalInput!): Hospital!
+    updateHospital(input: UpdateHospitalInput!): Hospital!
+    deleteHospital(input: DeleteHospitalInput!): Boolean!
   }
 `;
