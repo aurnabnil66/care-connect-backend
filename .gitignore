@@ -21,7 +21,7 @@ build/
 
 # Prisma
 prisma/migrations/
-/src/generated
+src/generated
 
 # System Files
 .DS_Store
