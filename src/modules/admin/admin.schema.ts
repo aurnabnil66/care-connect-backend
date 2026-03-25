@@ -44,6 +44,30 @@ export const adminTypeDefs = gql`
     approval: Boolean
   }
 
+  type CreateHospitalResponse {
+    id: Int!
+    name: String!
+    address: String!
+    city: String!
+    createdAt: DateTime
+  }
+
+  type UpdateHospitalResponse {
+    id: Int!
+    name: String!
+    address: String!
+    city: String!
+    updatedAt: DateTime
+  }
+
+  type DeleteHospitalResponse {
+    id: Int!
+    name: String!
+    address: String!
+    city: String!
+    deletedAt: DateTime
+  }
+
   # ---------------------------- Inputs ----------------------------
   input CreateAdminInput {
     email: String!
@@ -109,8 +133,8 @@ export const adminTypeDefs = gql`
     approveByAdmin(input: ApproveByAdminInput!): AdminProfile
 
     # Hospital
-    createHospital(input: CreateHospitalInput!): Hospital!
-    updateHospital(input: UpdateHospitalInput!): Hospital!
-    deleteHospital(input: DeleteHospitalInput!): Boolean!
+    createHospital(input: CreateHospitalInput!): CreateHospitalResponse!
+    updateHospital(input: UpdateHospitalInput!): UpdateHospitalResponse!
+    # deleteHospital(input: DeleteHospitalInput!): DeleteHospitalResponse!
   }
 `;

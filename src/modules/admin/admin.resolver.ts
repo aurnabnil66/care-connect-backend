@@ -36,9 +36,9 @@ export const adminResolvers = {
 
     getHospitalById: async (_: any, { id }: { id: number }) => {
       try {
-        return await adminService.getHospitalById(id);
+        return await adminService.getHospitalById({ id });
       } catch (error) {
-        console.error("Get Hospital By ID Error:", error);
+        console.error("Get Hospital By Id Error:", error);
         throw error;
       }
     },
@@ -110,33 +110,22 @@ export const adminResolvers = {
       }
     },
 
-    createHospital: authorize(["ADMIN"])(
-      async (
-        _: any,
-        { input }: { input: { name: string; address: string; city: string } },
-        context: any,
-      ) => {
-        if (!context.user) throw new Error("Not authenticated");
+    createHospital: async (
+      _: any,
+      { input }: { input: { name: string; address: string; city: string } },
+      context: any,
+    ) => {
+      if (!context.user) throw new Error("Not authenticated");
 
-        // Create a new hospital using the input
-        return adminService.createHospital(input);
-      },
-    ),
+      // Create a new hospital using the input
+      return adminService.createHospital(input);
+    },
 
     updateHospital: async (_: any, { input }: any) => {
       try {
         return await adminService.updateHospital(input);
       } catch (error) {
         console.error("Update Hospital Error:", error);
-        throw error;
-      }
-    },
-
-    deleteHospital: async (_: any, { input }: any) => {
-      try {
-        return await adminService.deleteHospital(input.id);
-      } catch (error) {
-        console.error("Delete Hospital Error:", error);
         throw error;
       }
     },
