@@ -5,6 +5,10 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+# Ignore lock files
+package-lock.json
+yarn.lock
+
 # Logs
 logs/
 *.log
@@ -19,7 +23,7 @@ logs/
 dist/
 build/
 
-# Prisma
+# Prisma migrations
 prisma/migrations/
 src/generated
 
@@ -31,6 +35,10 @@ Thumbs.db
 .vscode/
 .idea/
 
+# Github settings or others
 .github
+
+# Generated prisma files
+/src/generated/prisma
 
 
