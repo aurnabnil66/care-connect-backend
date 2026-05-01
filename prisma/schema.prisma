@@ -56,6 +56,8 @@ model AdminProfile {
   approvedBy Int?
   approvedAt DateTime?
 
+  photoUrl String?
+
   user User @relation(fields: [userId], references: [id])
 
   createdAt DateTime  @default(now())
@@ -72,6 +74,8 @@ model DoctorProfile {
   phone          String?
   designation    String?
   specialization String?
+
+  photoUrl String?
 
   user User @relation(fields: [userId], references: [id])
 
@@ -94,6 +98,8 @@ model PatientProfile {
   name      String
   phone     String?
 
+  photoUrl String?
+
   user User @relation(fields: [userId], references: [id])
 
   createdAt DateTime  @default(now())
@@ -110,6 +116,8 @@ model HospitalManagerProfile {
   userId     Int    @unique
   employeeId String @unique
   hospitalId Int
+
+  photoUrl String?
 
   user     User     @relation(fields: [userId], references: [id])
   hospital Hospital @relation(fields: [hospitalId], references: [id])
@@ -128,6 +136,8 @@ model Hospital {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+
+  photoUrl String?
 
   doctors      DoctorHospital[]
   managers     HospitalManagerProfile[]
