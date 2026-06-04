@@ -12,14 +12,6 @@ export const adminTypeDefs = gql`
     approval: Boolean
   }
 
-  type Hospital {
-    id: Int!
-    name: String!
-    address: String!
-    city: String!
-    createdAt: DateTime
-  }
-
   type CreateAdminResponse {
     userId: Int
     email: String
@@ -44,30 +36,6 @@ export const adminTypeDefs = gql`
     approval: Boolean
   }
 
-  type CreateHospitalResponse {
-    id: Int!
-    name: String!
-    address: String!
-    city: String!
-    createdAt: DateTime
-  }
-
-  type UpdateHospitalResponse {
-    id: Int!
-    name: String!
-    address: String!
-    city: String!
-    updatedAt: DateTime
-  }
-
-  type DeleteHospitalResponse {
-    id: Int!
-    name: String!
-    address: String!
-    city: String!
-    deletedAt: DateTime
-  }
-
   # ---------------------------- Inputs ----------------------------
   input CreateAdminInput {
     email: String!
@@ -89,23 +57,6 @@ export const adminTypeDefs = gql`
     userId: Int!
   }
 
-  input CreateHospitalInput {
-    name: String!
-    address: String!
-    city: String!
-  }
-
-  input UpdateHospitalInput {
-    id: Int!
-    name: String
-    address: String
-    city: String
-  }
-
-  input DeleteHospitalInput {
-    id: Int!
-  }
-
   input ApproveByAdminInput {
     userId: Int!
     approval: Boolean!
@@ -113,28 +64,17 @@ export const adminTypeDefs = gql`
 
   # ---------------------------- Queries ----------------------------
   type Query {
-    # Admin
     getAllAdmins(page: Int, limit: Int): [AdminProfile!]!
     getPendingAdmins(page: Int, limit: Int): [AdminProfile!]!
-
-    # Hospital
-    getAllHospitals(page: Int, limit: Int): [Hospital!]!
-    getHospitalById(id: Int!): Hospital
   }
 
   # ---------------------------- Mutations ----------------------------
   type Mutation {
-    # Admin
     createAdmin(input: CreateAdminInput!): CreateAdminResponse!
     updateAdmin(input: UpdateAdminInput!): UpdateAdminResponse!
     deleteAdmin(input: DeleteAdminInput!): DeleteAdminResponse!
 
     # Admin Approval
     approveByAdmin(input: ApproveByAdminInput!): AdminProfile
-
-    # Hospital
-    createHospital(input: CreateHospitalInput!): CreateHospitalResponse!
-    updateHospital(input: UpdateHospitalInput!): UpdateHospitalResponse!
-    # deleteHospital(input: DeleteHospitalInput!): DeleteHospitalResponse!
   }
 `;
