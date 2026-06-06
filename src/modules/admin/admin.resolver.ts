@@ -39,8 +39,11 @@ export const adminResolvers = {
           phone?: string;
         };
       },
+      context: any,
     ) => {
       try {
+        if (!context.user) throw new Error("Not authenticated");
+
         return await adminService.createAdmin(input);
       } catch (error) {
         console.error("Create Admin Error:", error);
@@ -61,8 +64,11 @@ export const adminResolvers = {
           phone?: string;
         };
       },
+      context: any,
     ) => {
       try {
+        if (!context.user) throw new Error("Not authenticated");
+
         return await adminService.updateAdmin(input);
       } catch (error) {
         console.error("Update Admin Error:", error);
@@ -70,8 +76,14 @@ export const adminResolvers = {
       }
     },
 
-    deleteAdmin: async (_: any, { input }: any) => {
+    deleteAdmin: async (
+      _: any,
+      { input }: { input: { userId: number } },
+      context: any,
+    ) => {
       try {
+        if (!context.user) throw new Error("Not authenticated");
+
         return await adminService.deleteAdmin(input);
       } catch (error) {
         console.error("Delete Admin Error:", error);
@@ -82,8 +94,11 @@ export const adminResolvers = {
     approveByAdmin: async (
       _: any,
       { input }: { input: { userId: number; approval: boolean } },
+      context: any,
     ) => {
       try {
+        if (!context.user) throw new Error("Not authenticated");
+
         return await adminService.approveByAdmin(input.userId, input.approval);
       } catch (error) {
         console.error("Admin approval error:", error);
